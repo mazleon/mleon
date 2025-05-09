@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-primary text-secondary font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-semibold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl leading-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  a {
+    @apply text-accent-primary hover:text-accent-secondary transition-colors;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-primary text-secondary hover:bg-opacity-90 focus:ring-accent-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-transparent border border-accent-primary text-accent-primary hover:bg-accent-primary hover:bg-opacity-10 focus:ring-accent-primary;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .card {
+    @apply bg-primary-light rounded-xl p-6 transition-all duration-300;
+  }
+
+  .project-card {
+    @apply card hover:translate-y-[-8px] hover:shadow-lg;
+  }
+
+  .experience-card {
+    @apply card border-l-4 border-accent-primary my-4;
+  }
+
+  .skill-card {
+    @apply card flex items-center gap-4 hover:scale-[1.02];
+  }
+
+  .form-input {
+    @apply w-full bg-primary-light border border-secondary-dark rounded-lg px-4 py-3 text-secondary focus:border-accent-primary focus:ring-1 focus:ring-accent-primary focus:outline-none transition-colors duration-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-light rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent-primary bg-opacity-50;
+}
+
+/* Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
