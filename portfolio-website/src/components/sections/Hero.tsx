@@ -13,8 +13,8 @@ const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(80);
   
-  // Use number type instead of NodeJS.Timeout
-  const timeoutRef = useRef<number | null>(null);
+  // Use NodeJS.Timeout type for setTimeout
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const phrases = [
