@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
@@ -9,74 +9,82 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Hero: React.FC = () => {
   const [currentPhrase, setCurrentPhrase] = useState("");
-  const fallbackPhrase = "Loading..."; // Simplified for diagnostics
+  const [isDeleting, setIsDeleting] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(80);
+  
+  // Use number type instead of NodeJS.Timeout
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const phrases = [
       "Crafting intelligent solutions.",
-      "Innovating with data.",
-      "Building the future of AI.",
-      "Solving complex problems.",
+      "Building the future of AI."
     ];
 
     // Constants for animation timing (in milliseconds)
-    const TYPING_SPEED = 80; // Consistent speed for typing
-    const DELETING_SPEED = 50; // Consistent speed for deleting
-    const PAUSE_AFTER_TYPING = 1800; // Pause after phrase is fully typed
-    const PAUSE_BETWEEN_PHRASES = 500; // Pause before starting a new phrase
-    
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = TYPING_SPEED;
+    const TYPING_SPEED = 80;
+    const DELETING_SPEED = 50;
+    const PAUSE_AFTER_TYPING = 1800;
+    const PAUSE_BEFORE_TYPING = 500;
 
-    const type = () => {
-      const currentFullPhraseFromArray = phrases[currentIndex % phrases.length];
-      let textForDisplay;
+    const animateText = () => {
+      const currentFullPhrase = phrases[currentIndex % phrases.length];
+      
+      // Clear any existing timeout to prevent overlapping animations
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-      if (isDeleting) {
-        textForDisplay = currentFullPhraseFromArray.substring(0, charIndex - 1);
-        charIndex--;
+      if (!isDeleting) {
+        // Typing forward
+        setCurrentPhrase((prev) => {
+          const nextChar = currentFullPhrase.substring(0, prev.length + 1);
+          
+          // If we've completed typing the current phrase
+          if (nextChar === currentFullPhrase) {
+            // Schedule deletion after pause
+            setTypingSpeed(PAUSE_AFTER_TYPING);
+            setIsDeleting(true);
+          } else {
+            setTypingSpeed(TYPING_SPEED);
+          }
+          
+          return nextChar;
+        });
       } else {
-        textForDisplay = currentFullPhraseFromArray.substring(0, charIndex + 1);
-        charIndex++;
+        // Deleting
+        setCurrentPhrase((prev) => {
+          const nextChar = prev.substring(0, prev.length - 1);
+          
+          // If we've deleted the entire phrase
+          if (nextChar === '') {
+            // Move to next phrase
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+            setIsDeleting(false);
+            setTypingSpeed(PAUSE_BEFORE_TYPING);
+          } else {
+            setTypingSpeed(DELETING_SPEED);
+          }
+          
+          return nextChar;
+        });
       }
-
-      const escapedTextForState = textForDisplay.replace(/'/g, "&apos;");
-      setCurrentPhrase(escapedTextForState);
-
-      // Determine the next typing speed based on the current state
-      if (!isDeleting && charIndex === currentFullPhraseFromArray.length) {
-        // Finished typing the phrase, pause before deleting
-        isDeleting = true;
-        typingSpeed = PAUSE_AFTER_TYPING;
-      } else if (isDeleting && charIndex === 0) {
-        // Finished deleting the phrase, move to the next one
-        isDeleting = false;
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % phrases.length);
-        typingSpeed = PAUSE_BETWEEN_PHRASES;
-      } else {
-        // Normal typing or deleting
-        typingSpeed = isDeleting ? DELETING_SPEED : TYPING_SPEED;
-      }
-
-      if (
-        !(
-          isDeleting &&
-          charIndex === 0 &&
-          currentFullPhraseFromArray.length > 0
-        )
-      ) {
-        const timeoutId = setTimeout(type, typingSpeed);
-        return () => clearTimeout(timeoutId);
-      }
+      
+      // Schedule the next animation step
+      timeoutRef.current = setTimeout(animateText, typingSpeed);
     };
 
-    if (phrases.length > 0) {
-      const timeoutId = setTimeout(type, typingSpeed);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [currentIndex]);
+    // Start the animation
+    timeoutRef.current = setTimeout(animateText, typingSpeed);
+
+    // Cleanup function
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [currentIndex, isDeleting, typingSpeed]);
 
   const socialLinks = [
     {
@@ -149,7 +157,7 @@ const Hero: React.FC = () => {
               {currentPhrase ? (
                 <span dangerouslySetInnerHTML={{ __html: currentPhrase }} />
               ) : (
-                <span dangerouslySetInnerHTML={{ __html: fallbackPhrase }} />
+                <span>Loading...</span>
               )}
               <span className="animate-pulse opacity-75">|</span>
               {/* Blinking cursor */}
@@ -210,13 +218,41 @@ const Hero: React.FC = () => {
 
           {/* Image content */}
           <motion.div
-            className="order-1 lg:order-2 flex justify-center items-center"
+            className="order-1 lg:order-2 flex justify-center items-center relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
+            {/* Animated background circles */}
+            <motion.div 
+              className="absolute rounded-full bg-accent-primary/20 blur-xl"
+              style={{ width: '380px', height: '380px' }}
+              animate={{
+                scale: [1, 1.1, 1],
+                rotate: [0, 90, 180, 270, 360],
+              }}
+              transition={{
+                duration: 20,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            />
+            <motion.div 
+              className="absolute rounded-full bg-accent-secondary/20 blur-xl"
+              style={{ width: '400px', height: '400px' }}
+              animate={{
+                scale: [1.1, 1, 1.1],
+                rotate: [360, 270, 180, 90, 0],
+              }}
+              transition={{
+                duration: 15,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            />
+            
             <AnimatedGradientBorder
-              containerClassName="w-[220px] h-[220px] sm:w-[250px] sm:h-[250px] md:w-[300px] md:h-[300px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
+              containerClassName="w-[220px] h-[220px] sm:w-[250px] sm:h-[250px] md:w-[300px] md:h-[300px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px] relative z-10"
               borderWidth={4}
             >
               <Avatar className="w-full h-full bg-primary-light">

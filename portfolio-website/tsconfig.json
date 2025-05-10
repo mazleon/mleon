@@ -23,7 +23,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    
+    /* Add Node.js types */
+    "types": ["node"]
   },
   "include": ["src"]
 }
