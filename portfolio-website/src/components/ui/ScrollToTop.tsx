@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiArrowUp } from "react-icons/fi";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 const ScrollToTop = () => {
   const [show, setShow] = useState(false);
@@ -37,7 +37,7 @@ const ScrollToTop = () => {
           className="fixed bottom-8 right-8 p-3 rounded-full bg-accent-primary text-secondary shadow-lg hover:bg-accent-secondary transition-colors z-50"
           aria-label="Scroll to top"
         >
-          <FiArrowUp size={24} />
+          <AiOutlineArrowUp size={24} />
         </motion.button>
       )}
     </AnimatePresence>

@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiTwitter, FiHeart } from "react-icons/fi";
+import { AiFillGithub, AiFillLinkedin, AiOutlineTwitter, AiFillHeart } from "react-icons/ai";
 import { SiGooglescholar } from "react-icons/si";
 import { motion } from "framer-motion";
 import { Tooltip } from "../ui/tooltip";
@@ -9,17 +9,17 @@ const Footer = () => {
   const socialLinks = [
     {
       name: "LinkedIn",
-      icon: <FiLinkedin size={20} />,
+      icon: <AiFillLinkedin size={20} />,
       url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
     },
     {
       name: "GitHub",
-      icon: <FiGithub size={20} />,
+      icon: <AiFillGithub size={20} />,
       url: "https://github.com/mazleon",
     },
     {
       name: "Twitter",
-      icon: <FiTwitter size={20} />,
+      icon: <AiOutlineTwitter size={20} />,
       url: "https://x.com/LeonMazharul?lang=en",
     },
     {
@@ -72,7 +72,7 @@ const Footer = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Built with <FiHeart className="text-accent-primary" /> using React,
+            Made with <AiFillHeart className="inline-block text-red-500" /> by using React,
             TypeScript, Tailwind CSS and Framer Motion
           </motion.p>
         </div>

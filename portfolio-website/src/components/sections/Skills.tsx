@@ -3,13 +3,13 @@ import { useInView } from "react-intersection-observer";
 import SectionHeader from "../ui/SectionHeader";
 import { Progress } from "../ui/Progress";
 import {
-  FiCpu,
-  FiCode,
-  FiDatabase,
-  FiCloud,
-  FiTool,
-  FiUsers,
-} from "react-icons/fi";
+  AiOutlineCode,
+  AiOutlineDatabase,
+  AiOutlineCloud,
+  AiOutlineTool,
+  AiOutlineTeam,
+  AiOutlineAppstore
+} from "react-icons/ai";
 import {
   SiTensorflow,
   SiPytorch,
@@ -46,7 +46,7 @@ const Skills = () => {
     {
       id: "machine-learning",
       title: "Machine Learning & AI",
-      icon: <FiCpu className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineAppstore className="text-accent-primary text-2xl" />,
       skills: [
         { name: "Deep Learning", level: 5, icon: <SiTensorflow /> },
         { name: "Computer Vision", level: 5 },
@@ -59,7 +59,7 @@ const Skills = () => {
     {
       id: "programming",
       title: "Programming",
-      icon: <FiCode className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineCode className="text-accent-primary text-2xl" />,
       skills: [
         { name: "Python", level: 5 },
         { name: "Java", level: 4 },
@@ -72,7 +72,7 @@ const Skills = () => {
     {
       id: "database",
       title: "Database",
-      icon: <FiDatabase className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineDatabase className="text-accent-primary text-2xl" />,
       skills: [
         { name: "SQL", level: 5 },
         { name: "MongoDB", level: 4 },
@@ -85,7 +85,7 @@ const Skills = () => {
     {
       id: "web",
       title: "Web Development",
-      icon: <FiCode className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineCode className="text-accent-primary text-2xl" />,
       skills: [
         { name: "FastAPI", level: 4, icon: <SiReact /> },
         { name: "Django", level: 4, icon: <SiNodedotjs /> },
@@ -98,7 +98,7 @@ const Skills = () => {
     {
       id: "devops",
       title: "DevOps & Cloud",
-      icon: <FiCloud className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineCloud className="text-accent-primary text-2xl" />,
       skills: [
         { name: "AWS", level: 4, icon: <SiAmazon /> },
         { name: "Docker", level: 4, icon: <SiDocker /> },
@@ -111,7 +111,7 @@ const Skills = () => {
     {
       id: "tools",
       title: "Tools & Methodologies",
-      icon: <FiTool className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineTool className="text-accent-primary text-2xl" />,
       skills: [
         { name: "Git", level: 5 },
         { name: "Jupyter", level: 5 },
@@ -124,7 +124,7 @@ const Skills = () => {
     {
       id: "soft-skills",
       title: "Soft Skills",
-      icon: <FiUsers className="text-accent-primary text-2xl" />,
+      icon: <AiOutlineTeam className="text-accent-primary text-2xl" />,
       skills: [
         { name: "Team Leadership", level: 4 },
         { name: "Project Management", level: 4 },

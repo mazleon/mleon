@@ -1,5 +1,5 @@
 [build]
-  command = "cd portfolio-website && npm install && npm run build"
+  command = "cd portfolio-website && npm install react-icons@latest --save && npm run build"
   publish = "portfolio-website/dist"
 
 [[redirects]]
@@ -9,3 +9,4 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  NPM_FLAGS = "--no-audit --no-fund"

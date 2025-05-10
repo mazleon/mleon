@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineBulb, AiFillBulb } from "react-icons/ai";
 import { useTheme } from "../theme/ThemeProvider";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -98,7 +98,7 @@ const Navbar = () => {
                     : "Switch to dark mode"
                 }
               >
-                {theme === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
+                {theme === "dark" ? <AiFillBulb size={20} /> : <AiOutlineBulb size={20} />}
               </motion.button>
             </Tooltip>
 
@@ -124,7 +124,7 @@ const Navbar = () => {
               className="md:hidden p-2 rounded-full text-secondary hover:bg-primary-light transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              {mobileMenuOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
             </button>
           </div>
         </div>

@@ -57,8 +57,13 @@ Thumbs.db
 # WINDSURF
 .windsurfrules
 .windsurfignore
+.windsurf/
 
 # Others folders
 design-context/
+design-context/
 ScreenShots/
+Screentsjpts/
+Screemtsjpts/
 references/
+refs/
