@@ -1,5 +1,5 @@
 [build]
-  command = "cd portfolio-website && npm install react-icons@latest --save && npm run build"
+  command = "cd portfolio-website && npm install react-icons@latest @types/node --save-dev && npm run build"
   publish = "portfolio-website/dist"
 
 [[redirects]]
