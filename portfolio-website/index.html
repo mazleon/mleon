@@ -23,7 +23,7 @@
     <meta property="og:title" content="Mazharul Islam Leon | Senior Software Engineer" />
     <meta property="og:description" content="Machine Learning Engineer specializing in AI solutions with expertise in computer vision and NLP." />
     <meta property="og:image" content="/images/mazharul-leon.png" />
-    <meta property="og:url" content="https://www.mazleon.com" />
+    <meta property="og:url" content="https://mazleon.com" />
     <meta property="og:type" content="website" />
     
     <!-- Twitter -->
@@ -35,6 +35,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
+    <!-- Hidden form for Netlify to detect during build -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     

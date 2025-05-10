@@ -54,13 +54,13 @@ const Contact = () => {
     const form = e.target as HTMLFormElement;
     
     // Create form data object to submit
-    const formDataToSend = new FormData(form);
+    const formData = new FormData(form);
     
     // Submit form data to Netlify
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formDataToSend as any).toString(),
+      body: new URLSearchParams(formData as any).toString(),
     })
       .then(() => {
         // Handle success
@@ -206,18 +206,11 @@ const Contact = () => {
             <form
               name="contact" 
               method="POST" 
-              data-netlify="true"
-              netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
               className="bg-primary-light rounded-xl p-6 shadow-md"
             >
-              {/* Netlify form hidden fields */}
+              {/* Hidden field needed for Netlify forms */}
               <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden">
-                <label>
-                  Don't fill this out if you're human: <input name="bot-field" />
-                </label>
-              </p>
               <h3 className="text-2xl font-bold text-secondary mb-6">
                 Send a Message
               </h3>
