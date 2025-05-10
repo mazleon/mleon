@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website showcasing my skills, projects, and professional experience in machine learning engineering and software development.
 
-[![Git Repo](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mazleon/mleon.git)
+[![Live Website](https://img.shields.io/badge/Website-FF7139?style=for-the-badge&logo=firefox-browser&logoColor=white)](https://www.mazleon.com) [![Git Repo](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mazleon/mleon.git)
 
 ![Portfolio Preview](public/images/portfolio-preview.png)
 

@@ -2,12 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Favicon tags for all browsers and devices -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#6049EA" />
+    <meta name="msapplication-TileColor" content="#0F172A" />
+    <meta name="theme-color" content="#0F172A" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
       content="Mazharul Islam Leon - Senior Software Engineer specializing in Machine Learning and AI solutions with over 5 years of experience in the industry and research field."
     />
+    <meta name="keywords" content="Mazharul Islam Leon, Machine Learning Engineer, AI Engineer, Deep Learning, Computer Vision, NLP, Portfolio" />
+    <meta name="author" content="Mazharul Islam Leon" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Mazharul Islam Leon | Senior Software Engineer" />
+    <meta property="og:description" content="Machine Learning Engineer specializing in AI solutions with expertise in computer vision and NLP." />
+    <meta property="og:image" content="/images/mazharul-leon.png" />
+    <meta property="og:url" content="https://www.mazleon.com" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
     <title>Mazharul Islam Leon | Senior Software Engineer</title>
 
     <!-- Preload fonts -->
@@ -17,5 +37,28 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mazharul Islam Leon",
+      "url": "https://www.mazleon.com",
+      "image": "/images/mazharul-leon.png",
+      "jobTitle": "Senior Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "AI Research"
+      },
+      "sameAs": [
+        "https://github.com/mazleon",
+        "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
+        "https://x.com/LeonMazharul",
+        "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en"
+      ],
+      "knowsAbout": ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing", "AI", "Software Engineering"]
+    }
+    </script>
   </body>
 </html>

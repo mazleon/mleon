@@ -5,6 +5,7 @@ import Experience from "./components/sections/Experience";
 import Projects from "./components/sections/Projects";
 import Skills from "./components/sections/Skills";
 import Blog from "./components/sections/Blog";
+import MLDemo from "./components/sections/MLDemo";
 import Contact from "./components/sections/Contact";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import ParticleBackground from "./components/sections/ParticleBackground";
@@ -19,6 +20,7 @@ function App() {
       <Projects />
       <Skills />
       <Blog />
+      <MLDemo />
       <Contact />
       <ScrollToTop />
     </Layout>

@@ -32,6 +32,7 @@ const Navbar = () => {
     { name: "Projects", href: "#projects" },
     { name: "Skills", href: "#skills" },
     { name: "Blog", href: "#blog" },
+    { name: "ML Demo", href: "#ml-demo" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -87,11 +88,11 @@ const Navbar = () => {
               }
             >
               <motion.button
-                onClick={toggleTheme}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.6 }}
                 className="p-2 rounded-full text-secondary hover:bg-primary-light transition-colors"
+                onClick={toggleTheme}
                 aria-label={
                   theme === "dark"
                     ? "Switch to light mode"

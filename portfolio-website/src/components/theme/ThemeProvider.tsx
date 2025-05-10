@@ -26,9 +26,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Update the document class for Tailwind
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
     } else {
+      document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     }
+    
+    // Force a re-render by toggling a class
+    document.documentElement.classList.add("theme-transition");
+    setTimeout(() => {
+      document.documentElement.classList.remove("theme-transition");
+    }, 100);
   };
 
   // Initialize theme from localStorage or system preference
@@ -50,7 +58,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const currentTheme = savedTheme || (prefersDark ? "dark" : "light");
     if (currentTheme === "dark") {
       document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
     } else {
+      document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     }
   }, []);
