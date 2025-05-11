@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mleon.netlify.app/sitemap.xml
+Sitemap: https://mazleon.com/sitemap.xml
