@@ -9,10 +9,14 @@ import MLDemo from "./components/sections/MLDemo";
 import Contact from "./components/sections/Contact";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import ParticleBackground from "./components/sections/ParticleBackground";
+import ChatWidget from "./components/chatbot/ChatWidget";
+
+import SEO from "./components/common/SEO";
 
 function App() {
   return (
     <Layout>
+      <SEO />
       <ParticleBackground />
       <Hero />
       <About />
@@ -23,8 +27,10 @@ function App() {
       <MLDemo />
       <Contact />
       <ScrollToTop />
+      <ChatWidget />
     </Layout>
   );
 }
 
 export default App;
+
