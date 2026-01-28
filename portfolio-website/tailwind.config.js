@@ -6,38 +6,44 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#0F172A", // Deep navy blue
-          light: "#1E293B", // Slightly lighter navy
+          DEFAULT: "#18181B", // Deep Zinc (Darker, more neutral)
+          light: "#27272A", // Zinc 800
         },
         secondary: {
-          DEFAULT: "#F8FAFC", // Off-white
-          dark: "#94A3B8", // Light slate gray
+          DEFAULT: "#FAFAFA", // Zoning White
+          dark: "#A1A1AA", // Zinc 400
         },
         accent: {
-          primary: "#6049EA", // Vibrant purple
-          secondary: "#22D3EE", // Bright cyan
+          primary: "#8B5CF6", // Electric Violet
+          secondary: "#06B6D4", // Neon Cyan
         },
-        success: "#10B981", // Green
-        error: "#EF4444", // Red
+        success: "#10B981", // Emerald
+        error: "#F43F5E", // Rose
         warning: "#F59E0B", // Amber
         info: "#3B82F6", // Blue
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        heading: ["Archivo", "sans-serif"],
+        body: ["Space Grotesk", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'deep-space': 'linear-gradient(to bottom, #09090B, #18181B)',
       },
       spacing: {
         "8xl": "96rem",
         "9xl": "128rem",
       },
       borderRadius: {
-        "4xl": "2rem",
+        "4xl": "2.5rem",
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.5s ease-out",
+        "slide-up": "slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)", // Custom bezier for premium feel
         "bounce-light": "bounceLight 2s infinite",
-        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        pulse: "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "float": "float 6s ease-in-out infinite",
         "gradient-x": "gradient-x 10s ease infinite",
         "gradient-y": "gradient-y 10s ease infinite",
         "gradient-xy": "gradient-xy 10s ease infinite",

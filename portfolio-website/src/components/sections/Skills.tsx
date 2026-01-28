@@ -1,236 +1,200 @@
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import {
+  useRef
+} from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "../ui/SectionHeader";
-import { Progress } from "../ui/Progress";
 import {
-  AiOutlineCode,
-  AiOutlineDatabase,
-  AiOutlineCloud,
-  AiOutlineTool,
-  AiOutlineTeam,
-  AiOutlineAppstore
-} from "react-icons/ai";
-import {
+  SiPython,
   SiTensorflow,
   SiPytorch,
   SiReact,
-  SiNodedotjs,
-  SiAmazon,
   SiDocker,
+  SiKubernetes,
+  SiFastapi,
+  SiDjango,
+  SiFlask,
+  SiPostgresql,
+  SiMongodb,
+  SiRedis,
+  SiAmazonwebservices,
+  SiGit,
+  SiLinux,
+  SiJupyter,
+  SiOpencv,
+  SiLangchain,
 } from "react-icons/si";
-import { Tooltip } from "../ui/tooltip";
+import { TbBrain, TbDatabaseSearch, TbCloudComputing, TbCode, TbTools, TbBrandCpp, TbSql } from "react-icons/tb";
+import { Badge } from "../ui/badge";
+import MotionWrapper from "@/components/common/MotionWrapper";
 
-// Skill types and interfaces
+// --- Data Structures ---
+interface SkillItem {
+  name: string;
+  icon?: React.ReactNode;
+}
+
 interface SkillCategory {
   id: string;
   title: string;
-  icon: JSX.Element;
-  skills: Skill[];
+  icon: React.ReactNode;
+  skills: SkillItem[];
+  featured?: boolean; // For larger Bento tiles
 }
 
-interface Skill {
-  name: string;
-  level: number; // 1-5 scale
-  icon?: JSX.Element;
-}
+// --- Skill Data ---
+const skillCategories: SkillCategory[] = [
+  {
+    id: "ml-ai",
+    title: "Machine Learning & AI",
+    icon: <TbBrain className="w-6 h-6" />,
+    featured: true,
+    skills: [
+      { name: "Deep Learning", icon: <SiTensorflow /> },
+      { name: "Computer Vision", icon: <SiOpencv /> },
+      { name: "NLP / LLMs", icon: <SiLangchain /> },
+      { name: "TensorFlow", icon: <SiTensorflow /> },
+      { name: "PyTorch", icon: <SiPytorch /> },
+      { name: "Agentic AI", icon: <SiLangchain /> },
+      { name: "CrewAI", icon: <TbBrain /> },
+      { name: "LangChain", icon: <SiLangchain /> },
+    ],
+  },
+  {
+    id: "programming",
+    title: "Programming Languages",
+    icon: <TbCode className="w-6 h-6" />,
+    featured: true,
+    skills: [
+      { name: "Python", icon: <SiPython /> },
+      { name: "C / C++", icon: <TbBrandCpp /> },
+      { name: "SQL", icon: <TbSql /> },
+      { name: "Bash", icon: <SiLinux /> },
+      { name: "JavaScript", icon: <SiReact /> },
+    ],
+  },
+  {
+    id: "backend",
+    title: "Backend & APIs",
+    icon: <TbCode className="w-6 h-6" />,
+    skills: [
+      { name: "FastAPI", icon: <SiFastapi /> },
+      { name: "Django", icon: <SiDjango /> },
+      { name: "Flask", icon: <SiFlask /> },
+      { name: "RESTful APIs" },
+      { name: "GraphQL" },
+    ],
+  },
+  {
+    id: "database",
+    title: "Databases",
+    icon: <TbDatabaseSearch className="w-6 h-6" />,
+    skills: [
+      { name: "PostgreSQL", icon: <SiPostgresql /> },
+      { name: "MongoDB", icon: <SiMongodb /> },
+      { name: "Redis", icon: <SiRedis /> },
+      { name: "VectorDB" },
+      { name: "Neo4j" },
+    ],
+  },
+  {
+    id: "devops",
+    title: "DevOps & Cloud",
+    icon: <TbCloudComputing className="w-6 h-6" />,
+    skills: [
+      { name: "AWS", icon: <SiAmazonwebservices /> },
+      { name: "Docker", icon: <SiDocker /> },
+      { name: "Kubernetes", icon: <SiKubernetes /> },
+      { name: "CI/CD" },
+      { name: "MLFlow" },
+    ],
+  },
+  {
+    id: "tools",
+    title: "Tools & Workflow",
+    icon: <TbTools className="w-6 h-6" />,
+    skills: [
+      { name: "Git", icon: <SiGit /> },
+      { name: "Jupyter", icon: <SiJupyter /> },
+      { name: "Linux", icon: <SiLinux /> },
+      { name: "Agile/Scrum" },
+      { name: "VS Code" },
+    ],
+  },
+];
 
+// --- Component ---
 const Skills = () => {
-  // Intersection observer for animations
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
   });
-
-  // Skill categories with their skills
-  const skillCategories: SkillCategory[] = [
-    {
-      id: "machine-learning",
-      title: "Machine Learning & AI",
-      icon: <AiOutlineAppstore className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "Deep Learning", level: 5, icon: <SiTensorflow /> },
-        { name: "Computer Vision", level: 5 },
-        { name: "Natural Language Processing", level: 4 },
-        { name: "TensorFlow", level: 5, icon: <SiTensorflow /> },
-        { name: "PyTorch", level: 4, icon: <SiPytorch /> },
-        { name: "Anomaly Detection", level: 5 },
-      ],
-    },
-    {
-      id: "programming",
-      title: "Programming",
-      icon: <AiOutlineCode className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "Python", level: 5 },
-        { name: "Java", level: 4 },
-        { name: "C", level: 4 },
-        { name: "C++", level: 4 },
-        { name: "Bash", level: 4 },
-        { name: "R", level: 3 },
-      ],
-    },
-    {
-      id: "database",
-      title: "Database",
-      icon: <AiOutlineDatabase className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "SQL", level: 5 },
-        { name: "MongoDB", level: 4 },
-        { name: "Redis", level: 3 },
-        { name: "VectorDB", level: 4 },
-        { name: "PostgreSQL", level: 4 },
-        { name: "Neo4j", level: 3 },
-      ],
-    },
-    {
-      id: "web",
-      title: "Web Development",
-      icon: <AiOutlineCode className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "FastAPI", level: 4, icon: <SiReact /> },
-        { name: "Django", level: 4, icon: <SiNodedotjs /> },
-        { name: "Flask", level: 4 },
-        { name: "HTML/CSS", level: 4 },
-        { name: "RESTful APIs", level: 5 },
-        { name: "GraphQL", level: 3 },
-      ],
-    },
-    {
-      id: "devops",
-      title: "DevOps & Cloud",
-      icon: <AiOutlineCloud className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "AWS", level: 4, icon: <SiAmazon /> },
-        { name: "Docker", level: 4, icon: <SiDocker /> },
-        { name: "Kubernetes", level: 3 },
-        { name: "CI/CD", level: 4 },
-        { name: "MLFlow", level: 4 },
-        { name: "Linux", level: 4 },
-      ],
-    },
-    {
-      id: "tools",
-      title: "Tools & Methodologies",
-      icon: <AiOutlineTool className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "Git", level: 5 },
-        { name: "Jupyter", level: 5 },
-        { name: "VS Code", level: 5 },
-        { name: "Agile/Scrum", level: 4 },
-        { name: "Jira", level: 4 },
-        { name: "TDD", level: 4 },
-      ],
-    },
-    {
-      id: "soft-skills",
-      title: "Soft Skills",
-      icon: <AiOutlineTeam className="text-accent-primary text-2xl" />,
-      skills: [
-        { name: "Team Leadership", level: 4 },
-        { name: "Project Management", level: 4 },
-        { name: "Communication", level: 5 },
-        { name: "Problem Solving", level: 5 },
-        { name: "Critical Thinking", level: 5 },
-        { name: "Adaptability", level: 5 },
-      ],
-    },
-  ];
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
-  // Function to get skill level text
-  const getSkillLevelText = (level: number) => {
-    switch (level) {
-      case 5:
-        return "Expert";
-      case 4:
-        return "Advanced";
-      case 3:
-        return "Intermediate";
-      case 2:
-        return "Basic";
-      case 1:
-        return "Beginner";
-      default:
-        return "";
-    }
-  };
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
-    <section id="skills" className="py-20 bg-primary-light">
-      <div className="container mx-auto px-4">
+    <section id="skills" ref={containerRef} className="section bg-deep-space relative overflow-hidden">
+      {/* Background Ambience */}
+      <motion.div style={{ y }} className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-accent-secondary/5 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <SectionHeader
-          title="Skills"
-          subtitle="My technical expertise and professional capabilities"
+          title="Technical Arsenal"
+          subtitle="The tools and technologies I wield to build intelligent systems"
         />
 
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
-        >
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.id}
-              variants={itemVariants}
-              className="bg-primary rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
-            >
-              <div className="flex items-center mb-6">
-                {category.icon}
-                <h3 className="text-xl font-bold text-secondary ml-3">
-                  {category.title}
-                </h3>
-              </div>
-
-              <div className="space-y-4">
-                {category.skills.map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center text-secondary">
-                        {skill.icon && (
-                          <span className="mr-2 text-accent-secondary">
-                            {skill.icon}
-                          </span>
-                        )}
-                        <span>{skill.name}</span>
-                      </div>
-                      <Tooltip content={`${getSkillLevelText(skill.level)}`}>
-                        <span className="text-xs text-secondary-dark">
-                          {skill.level * 20}%
-                        </span>
-                      </Tooltip>
-                    </div>
-                    <Progress
-                      value={skill.level * 20}
-                      animate={inView}
-                      delay={0.2 + catIndex * 0.05 + index * 0.1}
-                    />
+        {/* Bento Grid */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {skillCategories.map((category, index) => (
+            <MotionWrapper key={category.id} delay={index * 0.1} threshold={0.1}>
+              <div
+                className={`glass-panel rounded-2xl p-6 border-white/5 hover:border-accent-primary/30 transition-all duration-500 group h-full ${category.featured ? "lg:col-span-1 lg:row-span-1" : ""
+                  }`}
+              >
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 rounded-xl bg-accent-primary/10 text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-all duration-300">
+                    {category.icon}
                   </div>
-                ))}
+                  <h3 className="text-lg font-heading font-semibold text-white">
+                    {category.title}
+                  </h3>
+                </div>
+
+                {/* Skill Chips */}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <Badge
+                      key={skill.name}
+                      variant="outline"
+                      className="bg-[#09090B]/50 border-white/10 text-gray-300 hover:bg-accent-primary/20 hover:border-accent-primary/50 hover:text-white transition-all duration-300 py-1.5 px-3 text-sm flex items-center gap-2"
+                    >
+                      {skill.icon && (
+                        <span className="text-accent-primary group-hover:text-white">
+                          {skill.icon}
+                        </span>
+                      )}
+                      {skill.name}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            </MotionWrapper>
           ))}
-        </motion.div>
+        </div>
+
+        {/* Core Competencies Highlight */}
+        <MotionWrapper delay={0.5} className="mt-12">
+          <div className="glass-panel rounded-2xl p-8 border-white/5 text-center">
+            <h4 className="text-sm uppercase tracking-widest text-gray-500 mb-4">Core Competencies</h4>
+            <div className="flex flex-wrap justify-center gap-4">
+              {["AI/ML Engineering", "Computer Vision", "LLM Orchestration", "Backend Systems", "Cloud Architecture"].map((comp) => (
+                <span key={comp} className="text-xl md:text-2xl font-heading font-bold text-white/80 hover:text-accent-primary transition-colors cursor-default">
+                  {comp}
+                </span>
+              ))}
+            </div>
+          </div>
+        </MotionWrapper>
       </div>
     </section>
   );

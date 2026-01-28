@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import SectionHeader from "../ui/SectionHeader";
 import { Mail, Linkedin, Github, Twitter, Send } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
 import { Button } from "../ui/button";
 import { Tooltip } from "../ui/tooltip";
+import { Card, CardContent } from "../ui/card";
+import MotionWrapper from "@/components/common/MotionWrapper";
 
 interface FormState {
   name: string;
@@ -15,7 +16,6 @@ interface FormState {
 }
 
 const Contact = () => {
-  // Form state
   const [formData, setFormData] = useState<FormState>({
     name: "",
     email: "",
@@ -23,310 +23,214 @@ const Contact = () => {
     message: "",
   });
 
-  // Form submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
-  const [_submitError, _setSubmitError] = useState<string | null>(null);
 
-  // Intersection observer for animations
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  // Handle form input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Get form element
     const form = e.target as HTMLFormElement;
-    
-    // Create form data object to submit
-    const formData = new FormData(form);
-    
-    // Submit form data to Netlify
+    const data = new FormData(form);
+
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString(),
+      body: new URLSearchParams(data as any).toString(),
     })
       .then(() => {
-        // Handle success
         setIsSubmitting(false);
         setSubmitStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 5000);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setSubmitStatus(null), 5000);
       })
       .catch((error) => {
-        // Handle error
         console.error("Form submission error:", error);
         setIsSubmitting(false);
         setSubmitStatus("error");
-        
-        // Reset error message after 5 seconds
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 5000);
+        setTimeout(() => setSubmitStatus(null), 5000);
       });
   };
 
-  // Social links
   const socialLinks = [
-    {
-      name: "Email",
-      icon: <Mail size={24} />,
-      url: "mailto:contact@mazharulleon.com", // Placeholder email
-      label: "Email me",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin size={24} />,
-      url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
-      label: "Connect on LinkedIn",
-    },
-    {
-      name: "GitHub",
-      icon: <Github size={24} />,
-      url: "https://github.com/mazleon",
-      label: "Follow on GitHub",
-    },
-    {
-      name: "Twitter",
-      icon: <Twitter size={24} />,
-      url: "https://x.com/LeonMazharul?lang=en",
-      label: "Follow on Twitter",
-    },
-    {
-      name: "Google Scholar",
-      icon: <SiGooglescholar size={24} />,
-      url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en",
-      label: "View publications",
-    },
+    { name: "Email", icon: <Mail size={24} />, url: "mailto:contact@mazharulleon.com", label: "Email me" },
+    { name: "LinkedIn", icon: <Linkedin size={24} />, url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", label: "Connect on LinkedIn" },
+    { name: "GitHub", icon: <Github size={24} />, url: "https://github.com/mazleon", label: "Follow on GitHub" },
+    { name: "Twitter", icon: <Twitter size={24} />, url: "https://x.com/LeonMazharul?lang=en", label: "Follow on Twitter" },
+    { name: "Scholar", icon: <SiGooglescholar size={24} />, url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en", label: "View publications" },
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
-    <section id="contact" className="py-20 bg-primary">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="section bg-primary relative overflow-hidden">
+      {/* Background Ambience */}
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <SectionHeader
           title="Contact Me"
           subtitle="Feel free to reach out for collaborations, opportunities, or just to say hello"
         />
 
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={containerVariants}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12 max-w-6xl mx-auto"
-        >
-          {/* Contact Info */}
-          <motion.div variants={itemVariants}>
-            <h3 className="text-2xl font-bold text-secondary mb-6">
-              Let&apos;s Connect
-            </h3>
-            <p className="text-secondary-dark mb-8">
-              I&apos;m currently available for freelance work, full-time
-              positions, and interesting collaborations. Whether you have a
-              project in mind or just want to chat about technology, feel free
-              to reach out!
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mt-16 max-w-6xl mx-auto items-start">
 
-            <div className="space-y-4">
-              {socialLinks.map((link, index) => (
-                <Tooltip key={index} content={link.label}>
-                  <motion.a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variants={itemVariants}
-                    className="flex items-center group p-3 rounded-lg hover:bg-primary-light transition-colors"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="mr-4 text-accent-primary group-hover:text-accent-secondary transition-colors">
-                      {link.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-secondary font-medium">
-                        {link.name}
-                      </h4>
-                      <p className="text-sm text-secondary-dark">
-                        {link.label}
-                      </p>
-                    </div>
-                  </motion.a>
-                </Tooltip>
-              ))}
-            </div>
-          </motion.div>
+          {/* Contact Info */}
+          <div className="space-y-8">
+            <MotionWrapper delay={0.2}>
+              <h3 className="text-3xl font-heading font-bold text-secondary">Let's Connect</h3>
+              <p className="text-secondary-dark mt-4 text-lg leading-relaxed">
+                I'm currently available for freelance work, full-time positions, and interesting collaborations.
+                Whether you have a project in mind or just want to chat about technology, I'd love to hear from you.
+              </p>
+            </MotionWrapper>
+
+            <MotionWrapper delay={0.3}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {socialLinks.map((link, index) => (
+                  <Tooltip key={index} content={link.label}>
+                    <motion.a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center p-4 rounded-xl bg-[#18181B] border border-white/5 hover:border-accent-primary/30 transition-all duration-300 group shadow-sm hover:shadow-md"
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className="mr-4 text-accent-primary group-hover:text-white transition-colors p-2 bg-white/5 rounded-full">
+                        {link.icon}
+                      </div>
+                      <div>
+                        <h4 className="text-secondary font-medium group-hover:text-accent-primary transition-colors">{link.name}</h4>
+                        <p className="text-xs text-gray-500">{link.label}</p>
+                      </div>
+                    </motion.a>
+                  </Tooltip>
+                ))}
+              </div>
+            </MotionWrapper>
+
+            {/* Email Card */}
+            <MotionWrapper delay={0.4}>
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-white/5 mt-8">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-accent-primary rounded-full text-white shadow-lg shadow-accent-primary/20">
+                    <Mail size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400">Direct Email</p>
+                    <a href="mailto:contact@mazharulleon.com" className="text-lg font-mono text-white hover:text-accent-primary transition-colors">
+                      contact@mazharulleon.com
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </MotionWrapper>
+          </div>
 
           {/* Contact Form */}
-          <motion.div variants={itemVariants}>
-            <form
-              name="contact" 
-              method="POST" 
-              onSubmit={handleSubmit}
-              className="bg-primary-light rounded-xl p-6 shadow-md"
-            >
-              {/* Hidden field needed for Netlify forms */}
-              <input type="hidden" name="form-name" value="contact" />
-              <h3 className="text-2xl font-bold text-secondary mb-6">
-                Send a Message
-              </h3>
+          <MotionWrapper delay={0.4} className="relative">
+            {/* Glow effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-2xl blur opacity-20 pointer-events-none" />
 
-              {/* Success message */}
-              {submitStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-[#10B981] bg-opacity-20 rounded-lg"
-                >
-                  <p className="text-[#10B981] font-medium">
-                    Message sent successfully! I&apos;ll get back to you soon.
-                  </p>
-                </motion.div>
-              )}
+            <Card className="glass-panel border-white/10 relative">
+              <CardContent className="p-8">
+                <form name="contact" method="POST" onSubmit={handleSubmit} className="space-y-6">
+                  <input type="hidden" name="form-name" value="contact" />
 
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-secondary mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="Your name"
-                />
-              </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                      <Send className="text-accent-primary" size={24} />
+                      Send a Message
+                    </h3>
+                  </div>
 
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-secondary mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="your.email@example.com"
-                />
-              </div>
+                  {submitStatus === "success" && (
+                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm font-medium">
+                      Message sent successfully! I'll get back to you soon.
+                    </motion.div>
+                  )}
+                  {submitStatus === "error" && (
+                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm font-medium">
+                      Something went wrong. Please try again.
+                    </motion.div>
+                  )}
 
-              <div className="mb-4">
-                <label htmlFor="subject" className="block text-secondary mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="What is this regarding?"
-                />
-              </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="text-sm font-medium text-gray-300">Name</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                  </div>
 
-              <div className="mb-6">
-                <label htmlFor="message" className="block text-secondary mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="form-input resize-none"
-                  placeholder="Your message here..."
-                />
-              </div>
+                  <div className="space-y-2">
+                    <label htmlFor="subject" className="text-sm font-medium text-gray-300">Subject</label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
+                      placeholder="Project inquiry"
+                    />
+                  </div>
 
-              <Button type="submit" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-secondary"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Sending...
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center">
-                    <Send className="mr-2" />
-                    Send Message
-                  </span>
-                )}
-              </Button>
-            </form>
-          </motion.div>
-        </motion.div>
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium text-gray-300">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600 resize-none"
+                      placeholder="Tell me about your project..."
+                    />
+                  </div>
+
+                  <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-medium shadow-lg shadow-accent-primary/20 hover:shadow-accent-primary/40 transition-shadow">
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <Send size={18} /> Send Message
+                      </span>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </MotionWrapper>
+        </div>
       </div>
     </section>
   );
