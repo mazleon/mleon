@@ -57,7 +57,7 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { name: "Email", icon: <Mail size={24} />, url: "mailto:contact@mazharulleon.com", label: "Email me" },
+    { name: "Email", icon: <Mail size={24} />, url: "mailto:mzleon.cse@gmail.com", label: "Email me" },
     { name: "LinkedIn", icon: <Linkedin size={24} />, url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", label: "Connect on LinkedIn" },
     { name: "GitHub", icon: <Github size={24} />, url: "https://github.com/mazleon", label: "Follow on GitHub" },
     { name: "Twitter", icon: <Twitter size={24} />, url: "https://x.com/LeonMazharul?lang=en", label: "Follow on Twitter" },
@@ -120,8 +120,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400">Direct Email</p>
-                    <a href="mailto:contact@mazharulleon.com" className="text-lg font-mono text-white hover:text-accent-primary transition-colors">
-                      contact@mazharulleon.com
+                    <a href="mailto:mzleon.cse@gmail.com" className="text-lg font-mono text-white hover:text-accent-primary transition-colors">
+                      mzleon.cse@gmail.com
                     </a>
                   </div>
                 </div>
