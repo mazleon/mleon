@@ -100,6 +100,15 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
+            {/* Status Badge */}
+            <div className="hidden lg:flex items-center space-x-2 mr-2 bg-[#18181B]/50 border border-white/10 px-3 py-1.5 rounded-full hover:border-accent-primary/50 transition-colors cursor-default backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-xs font-mono text-gray-300">Available for Projects</span>
+            </div>
+
             {/* Dark/Light Mode Toggle */}
             <Tooltip
               content={

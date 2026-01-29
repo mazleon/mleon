@@ -98,18 +98,20 @@ const Hero: React.FC = () => {
 
             <MotionWrapper delay={0.6}>
               <div className="mt-12 flex space-x-6 justify-center lg:justify-start">
-                {SOCIAL_LINKS.map((link) => (
-                  <Tooltip key={link.label} content={link.label}>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-secondary-dark hover:text-white transition-all duration-300 hover:scale-110 p-2 rounded-full hover:bg-white/5"
-                    >
-                      {link.icon}
-                    </a>
-                  </Tooltip>
-                ))}
+                <div className="flex gap-4 p-3 rounded-2xl bg-[#18181B]/50 backdrop-blur-md border border-white/5 hover:border-accent-primary/20 transition-all duration-300">
+                  {SOCIAL_LINKS.map((link) => (
+                    <Tooltip key={link.label} content={link.label}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 p-2 rounded-xl hover:bg-white/10"
+                      >
+                        {link.icon}
+                      </a>
+                    </Tooltip>
+                  ))}
+                </div>
               </div>
             </MotionWrapper>
           </div>
