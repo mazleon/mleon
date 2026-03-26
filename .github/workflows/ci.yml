@@ -1,0 +1,37 @@
+name: React CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./portfolio-website
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        cache-dependency-path: ./portfolio-website/package-lock.json
+
+    - name: Install dependencies
+      # Use npm install just as the Netlify build did, in case there are mismatches in package-lock 
+      run: npm install
+
+    - name: Type Check & Build
+      run: npm run build
+
+    - name: Run linter
+      # Continue even if there are linting warnings, to not falsely stop deployment for non-fatal issues if desired, 
+      # but standard `npm run lint` with --max-warnings 0 will enforce quality
+      run: npm run lint
