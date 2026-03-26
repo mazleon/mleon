@@ -3,14 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import SectionHeader from "../ui/SectionHeader";
 import { Github, ExternalLink, Eye, X } from "lucide-react";
-import { Button } from "../ui/button";
-import { Tooltip } from "../ui/tooltip";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
-import { Badge } from "../ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import MotionWrapper from "@/components/common/MotionWrapper";
 
-// Project types
 type ProjectCategory = "all" | "ml" | "software" | "research";
 
 interface Project {
@@ -29,10 +23,7 @@ const Projects = () => {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const projects: Project[] = [
     {
@@ -83,117 +74,103 @@ const Projects = () => {
 
   return (
     <section id="projects" className="section bg-primary relative">
-      {/* Background Gradients */}
-      <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-accent-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[20%] left-[-10%] w-[500px] h-[500px] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <SectionHeader
-          title="Featured Projects"
+          label="04 — Projects"
+          title="Featured Work"
           subtitle="Innovations in AI and Software Engineering"
         />
 
-        {/* Category Tabs */}
+        {/* Category Filter */}
         <MotionWrapper delay={0.2} className="flex justify-center mb-16">
-          <Tabs
-            defaultValue="all"
-            value={activeCategory}
-            onValueChange={(value) => setActiveCategory(value as ProjectCategory)}
-            className="w-full max-w-lg"
-          >
-            <TabsList className="grid grid-cols-4 w-full bg-[#18181B]/80 backdrop-blur-md border border-white/5 p-1 rounded-xl">
-              {categories.map((category) => (
-                <TabsTrigger
-                  key={category.id}
-                  value={category.id}
-                  className="text-xs sm:text-sm font-medium data-[state=active]:bg-accent-primary data-[state=active]:text-white transition-all rounded-lg py-2"
-                >
-                  {category.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          <div className="flex flex-wrap gap-2 p-1 bg-surface rounded-full border border-surface-light">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id as ProjectCategory)}
+                className={`px-5 py-2 text-sm font-body rounded-full transition-all duration-200 cursor-pointer ${
+                  activeCategory === cat.id
+                    ? "bg-accent text-white"
+                    : "text-muted hover:text-cream"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </MotionWrapper>
 
         {/* Projects Grid */}
-        <motion.div
-          ref={ref}
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-10"
-        >
+        <motion.div ref={ref} layout className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
               >
-                <Card className="h-full group overflow-hidden glass-panel border border-white/5 hover:border-accent-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]">
-                  <CardContent className="p-0 flex flex-col h-full">
-                    {/* Image Area */}
-                    <div className="relative h-64 overflow-hidden">
-                      <div className="absolute inset-0 bg-primary/20 z-10 group-hover:bg-primary/0 transition-colors duration-500" />
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover:rotate-1"
-                        loading="lazy"
-                        onError={(e) => { e.currentTarget.src = `/images/project-placeholder.png`; }}
-                      />
-
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-[#18181B]/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 z-20">
-                        <Button
-                          variant="secondary"
-                          size="icon"
-                          onClick={() => setSelectedProject(project)}
-                          className="rounded-full bg-white/10 hover:bg-accent-primary text-white border-none"
+                <div className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30" onClick={() => setSelectedProject(project)}>
+                  {/* Image */}
+                  <div className="relative h-56 -mx-6 -mt-6 mb-6 overflow-hidden bg-surface-light">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.src = "/images/project-placeholder.png"; }}
+                    />
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                        className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
+                        aria-label="View project details"
+                      >
+                        <Eye size={20} />
+                      </button>
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
+                          aria-label="View source code"
                         >
-                          <Eye size={20} />
-                        </Button>
-                        {project.githubLink && (
-                          <Button variant="secondary" size="icon" className="rounded-full bg-white/10 hover:bg-accent-primary text-white border-none" asChild>
-                            <a href={project.githubLink} target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
-                          </Button>
-                        )}
-                      </div>
+                          <Github size={20} />
+                        </a>
+                      )}
                     </div>
+                  </div>
 
-                    {/* Content Area */}
-                    <div className="p-6 flex flex-col flex-grow">
-                      <CardHeader className="p-0 mb-4">
-                        <div className="flex justify-between items-start">
-                          <CardTitle className="text-xl font-heading font-bold text-secondary group-hover:text-accent-primary transition-colors">
-                            {project.title}
-                          </CardTitle>
-                          <Badge variant="outline" className="text-xs border-accent-secondary/30 text-accent-secondary">
-                            {project.category[0].toUpperCase()}
-                          </Badge>
-                        </div>
-                      </CardHeader>
+                  {/* Content */}
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-heading font-bold text-cream group-hover:text-accent transition-colors">
+                      {project.title}
+                    </h3>
+                    <span className="text-xs font-mono text-accent uppercase tracking-wider ml-3 flex-shrink-0">
+                      {project.category[0]}
+                    </span>
+                  </div>
 
-                      <CardDescription className="text-gray-400 mb-6 font-body text-sm leading-relaxed flex-grow">
-                        {project.description}
-                      </CardDescription>
+                  <p className="text-cream-dark text-sm font-body leading-relaxed mb-6">
+                    {project.description}
+                  </p>
 
-                      <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
-                        {project.technologies.slice(0, 4).map((tech, idx) => (
-                          <Badge key={idx} className="bg-[#18181B] text-gray-300 border border-white/10 hover:border-accent-primary/50 transition-colors text-xs py-1">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <Badge className="bg-transparent text-gray-500 border border-transparent text-xs py-1">
-                            +{project.technologies.length - 4}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-light">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <span key={tech} className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 4 && (
+                      <span className="text-xs text-muted/50">+{project.technologies.length - 4}</span>
+                    )}
+                  </div>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -205,70 +182,65 @@ const Projects = () => {
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedProject(null)}>
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-[#09090B]/90 backdrop-blur-md"
+                className="absolute inset-0 bg-primary/95 backdrop-blur-sm"
               />
               <motion.div
                 initial={{ scale: 0.95, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-4xl bg-[#18181B] border border-white/10 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                className="relative w-full max-w-3xl bg-surface border border-surface-light rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
               >
-                <div className="relative h-64 sm:h-80 w-full shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#18181B] via-transparent to-transparent z-10" />
+                {/* Modal Image */}
+                <div className="relative h-64 sm:h-72 w-full shrink-0 bg-surface-light">
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
                   <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="absolute top-4 right-4 z-20 text-white bg-black/20 hover:bg-black/40 rounded-full"
+                  <button
+                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-primary/60 text-cream hover:bg-primary transition-colors cursor-pointer"
                     onClick={() => setSelectedProject(null)}
+                    aria-label="Close"
                   >
-                    <X size={20} />
-                  </Button>
+                    <X size={18} />
+                  </button>
                   <div className="absolute bottom-6 left-6 z-20">
-                    <h3 className="text-3xl font-heading font-bold text-white mb-2">{selectedProject.title}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.category.map(c => (
-                        <Badge key={c} className="bg-accent-primary text-white border-none">{c.toUpperCase()}</Badge>
+                    <h3 className="text-3xl font-heading font-bold text-cream mb-2">{selectedProject.title}</h3>
+                    <div className="flex gap-2">
+                      {selectedProject.category.map((c) => (
+                        <span key={c} className="px-3 py-1 text-xs font-mono bg-accent text-white rounded-full uppercase">
+                          {c}
+                        </span>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8 overflow-y-auto custom-scrollbar">
+                {/* Modal Content */}
+                <div className="p-8 overflow-y-auto">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="md:col-span-2 space-y-6">
-                      <div className="prose prose-invert max-w-none text-gray-300 font-body leading-relaxed">
-                        <p>{selectedProject.longDescription || selectedProject.description}</p>
-                      </div>
+                    <div className="md:col-span-2">
+                      <p className="text-cream-dark font-body leading-relaxed">{selectedProject.longDescription || selectedProject.description}</p>
                     </div>
-
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                       <div>
-                        <h4 className="text-sm font-mono uppercase text-gray-500 mb-4">Tech Stack</h4>
+                        <p className="editorial-label">Tech Stack</p>
                         <div className="flex flex-wrap gap-2">
                           {selectedProject.technologies.map((tech) => (
-                            <Badge key={tech} variant="outline" className="border-white/10 text-gray-300">
+                            <span key={tech} className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full">
                               {tech}
-                            </Badge>
+                            </span>
                           ))}
                         </div>
                       </div>
-
                       <div className="flex flex-col gap-3">
                         {selectedProject.githubLink && (
-                          <Button className="w-full" asChild>
-                            <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer">
-                              <Github className="mr-2 h-4 w-4" /> View Code
-                            </a>
-                          </Button>
+                          <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer" className="btn-primary text-center text-sm cursor-pointer">
+                            <Github className="inline mr-2 h-4 w-4" /> View Code
+                          </a>
                         )}
                         {selectedProject.liveLink && (
-                          <Button variant="outline" className="w-full" asChild>
-                            <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
-                            </a>
-                          </Button>
+                          <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer" className="btn-outline text-center text-sm cursor-pointer">
+                            <ExternalLink className="inline mr-2 h-4 w-4" /> Live Demo
+                          </a>
                         )}
                       </div>
                     </div>

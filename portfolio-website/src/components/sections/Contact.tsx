@@ -3,9 +3,6 @@ import { motion } from "framer-motion";
 import SectionHeader from "../ui/SectionHeader";
 import { Mail, Linkedin, Github, Twitter, Send } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
-import { Button } from "../ui/button";
-import { Tooltip } from "../ui/tooltip";
-import { Card, CardContent } from "../ui/card";
 import MotionWrapper from "@/components/common/MotionWrapper";
 
 interface FormState {
@@ -17,18 +14,13 @@ interface FormState {
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormState>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    name: "", email: "", subject: "", message: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,7 +28,6 @@ const Contact = () => {
     setIsSubmitting(true);
     const form = e.target as HTMLFormElement;
     const data = new FormData(form);
-
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -48,8 +39,7 @@ const Contact = () => {
         setFormData({ name: "", email: "", subject: "", message: "" });
         setTimeout(() => setSubmitStatus(null), 5000);
       })
-      .catch((error) => {
-        console.error("Form submission error:", error);
+      .catch(() => {
         setIsSubmitting(false);
         setSubmitStatus("error");
         setTimeout(() => setSubmitStatus(null), 5000);
@@ -57,70 +47,59 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { name: "Email", icon: <Mail size={24} />, url: "mailto:mzleon.cse@gmail.com", label: "Email me" },
-    { name: "LinkedIn", icon: <Linkedin size={24} />, url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", label: "Connect on LinkedIn" },
-    { name: "GitHub", icon: <Github size={24} />, url: "https://github.com/mazleon", label: "Follow on GitHub" },
-    { name: "Twitter", icon: <Twitter size={24} />, url: "https://x.com/LeonMazharul?lang=en", label: "Follow on Twitter" },
-    { name: "Scholar", icon: <SiGooglescholar size={24} />, url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en", label: "View publications" },
+    { name: "Email", icon: <Mail size={18} />, url: "mailto:mzleon.cse@gmail.com" },
+    { name: "LinkedIn", icon: <Linkedin size={18} />, url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/" },
+    { name: "GitHub", icon: <Github size={18} />, url: "https://github.com/mazleon" },
+    { name: "Twitter", icon: <Twitter size={18} />, url: "https://x.com/LeonMazharul?lang=en" },
+    { name: "Scholar", icon: <SiGooglescholar size={18} />, url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en" },
   ];
 
   return (
-    <section id="contact" className="section bg-primary relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="contact" className="section bg-primary relative">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <SectionHeader
-          title="Contact Me"
-          subtitle="Feel free to reach out for collaborations, opportunities, or just to say hello"
+          label="08 — Contact"
+          title="Let's Connect"
+          subtitle="Whether you have a project in mind or just want to chat about technology, I'd love to hear from you."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mt-16 max-w-6xl mx-auto items-start">
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-6xl mx-auto items-start">
           {/* Contact Info */}
           <div className="space-y-8">
             <MotionWrapper delay={0.2}>
-              <h3 className="text-3xl font-heading font-bold text-secondary">Let's Connect</h3>
-              <p className="text-secondary-dark mt-4 text-lg leading-relaxed">
+              <p className="text-cream-dark text-lg leading-relaxed font-body">
                 I'm currently available for freelance work, full-time positions, and interesting collaborations.
-                Whether you have a project in mind or just want to chat about technology, I'd love to hear from you.
               </p>
             </MotionWrapper>
 
+            {/* Social links */}
             <MotionWrapper delay={0.3}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {socialLinks.map((link, index) => (
-                  <Tooltip key={index} content={link.label}>
-                    <motion.a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center p-4 rounded-xl bg-[#18181B] border border-white/5 hover:border-accent-primary/30 transition-all duration-300 group shadow-sm hover:shadow-md"
-                      whileHover={{ y: -5 }}
-                    >
-                      <div className="mr-4 text-accent-primary group-hover:text-white transition-colors p-2 bg-white/5 rounded-full">
-                        {link.icon}
-                      </div>
-                      <div>
-                        <h4 className="text-secondary font-medium group-hover:text-accent-primary transition-colors">{link.name}</h4>
-                        <p className="text-xs text-gray-500">{link.label}</p>
-                      </div>
-                    </motion.a>
-                  </Tooltip>
+              <div className="space-y-3">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 rounded-xl border border-surface-light hover:border-accent/30 transition-all duration-200 group cursor-pointer"
+                  >
+                    <span className="text-muted group-hover:text-accent transition-colors">{link.icon}</span>
+                    <span className="text-cream font-body group-hover:text-accent transition-colors">{link.name}</span>
+                  </a>
                 ))}
               </div>
             </MotionWrapper>
 
-            {/* Email Card */}
+            {/* Email highlight */}
             <MotionWrapper delay={0.4}>
-              <div className="p-6 rounded-2xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-white/5 mt-8">
+              <div className="p-6 rounded-2xl bg-accent/5 border border-accent/20">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-accent-primary rounded-full text-white shadow-lg shadow-accent-primary/20">
-                    <Mail size={24} />
+                  <div className="p-3 bg-accent rounded-full text-white">
+                    <Mail size={20} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400">Direct Email</p>
-                    <a href="mailto:mzleon.cse@gmail.com" className="text-lg font-mono text-white hover:text-accent-primary transition-colors">
+                    <p className="text-xs text-muted font-mono">Direct Email</p>
+                    <a href="mailto:mzleon.cse@gmail.com" className="text-lg font-mono text-cream hover:text-accent transition-colors cursor-pointer">
                       mzleon.cse@gmail.com
                     </a>
                   </div>
@@ -130,105 +109,62 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <MotionWrapper delay={0.4} className="relative">
-            {/* Glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-2xl blur opacity-20 pointer-events-none" />
+          <MotionWrapper delay={0.3}>
+            <div className="editorial-card">
+              <form name="contact" method="POST" onSubmit={handleSubmit} className="space-y-5">
+                <input type="hidden" name="form-name" value="contact" />
 
-            <Card className="glass-panel border-white/10 relative">
-              <CardContent className="p-8">
-                <form name="contact" method="POST" onSubmit={handleSubmit} className="space-y-6">
-                  <input type="hidden" name="form-name" value="contact" />
+                <h3 className="text-xl font-heading font-bold text-cream mb-4 flex items-center gap-2">
+                  <Send className="text-accent" size={20} />
+                  Send a Message
+                </h3>
 
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                      <Send className="text-accent-primary" size={24} />
-                      Send a Message
-                    </h3>
+                {submitStatus === "success" && (
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-success/10 border border-success/20 rounded-xl text-success text-sm">
+                    Message sent! I'll get back to you soon.
+                  </motion.div>
+                )}
+                {submitStatus === "error" && (
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-error/10 border border-error/20 rounded-xl text-error text-sm">
+                    Something went wrong. Please try again.
+                  </motion.div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label htmlFor="name" className="text-xs font-mono text-muted uppercase tracking-wider">Name</label>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="form-input" placeholder="Your name" />
                   </div>
+                  <div className="space-y-1.5">
+                    <label htmlFor="email" className="text-xs font-mono text-muted uppercase tracking-wider">Email</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="form-input" placeholder="your@email.com" />
+                  </div>
+                </div>
 
-                  {submitStatus === "success" && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm font-medium">
-                      Message sent successfully! I'll get back to you soon.
-                    </motion.div>
+                <div className="space-y-1.5">
+                  <label htmlFor="subject" className="text-xs font-mono text-muted uppercase tracking-wider">Subject</label>
+                  <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} required className="form-input" placeholder="Project inquiry" />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="message" className="text-xs font-mono text-muted uppercase tracking-wider">Message</label>
+                  <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={5} className="form-input resize-none" placeholder="Tell me about your project..." />
+                </div>
+
+                <button type="submit" disabled={isSubmitting} className="btn-primary w-full cursor-pointer disabled:opacity-50">
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Sending...
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <Send size={16} /> Send Message
+                    </span>
                   )}
-                  {submitStatus === "error" && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm font-medium">
-                      Something went wrong. Please try again.
-                    </motion.div>
-                  )}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium text-gray-300">Name</label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
-                        placeholder="Your name"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium text-gray-300">Subject</label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600"
-                      placeholder="Project inquiry"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-300">Message</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full bg-[#09090B] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-gray-600 resize-none"
-                      placeholder="Tell me about your project..."
-                    />
-                  </div>
-
-                  <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-medium shadow-lg shadow-accent-primary/20 hover:shadow-accent-primary/40 transition-shadow">
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Sending...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <Send size={18} /> Send Message
-                      </span>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                </button>
+              </form>
+            </div>
           </MotionWrapper>
         </div>
       </div>

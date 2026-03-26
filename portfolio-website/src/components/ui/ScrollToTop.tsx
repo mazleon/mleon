@@ -6,23 +6,13 @@ const ScrollToTop = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShow(true);
-      } else {
-        setShow(false);
-      }
-    };
-
+    const handleScroll = () => setShow(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -34,10 +24,10 @@ const ScrollToTop = () => {
           exit={{ opacity: 0, scale: 0.5 }}
           transition={{ duration: 0.3 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 rounded-full bg-accent-primary text-secondary shadow-lg hover:bg-accent-secondary transition-colors z-50"
+          className="fixed bottom-8 right-8 p-3 rounded-full bg-accent text-white shadow-lg hover:bg-accent-light transition-colors z-50 cursor-pointer"
           aria-label="Scroll to top"
         >
-          <AiOutlineArrowUp size={24} />
+          <AiOutlineArrowUp size={20} />
         </motion.button>
       )}
     </AnimatePresence>

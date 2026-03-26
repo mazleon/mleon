@@ -73,7 +73,7 @@ export default function ChatWidget() {
             {/* Floating Button */}
             <motion.button
                 onClick={() => setIsOpen(true)}
-                className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-accent-primary text-white shadow-lg shadow-accent-primary/30 flex items-center justify-center hover:scale-110 transition-transform ${isOpen ? "hidden" : ""
+                className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-accent text-white shadow-lg shadow-accent/30 flex items-center justify-center hover:scale-110 transition-transform ${isOpen ? "hidden" : ""
                     }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -95,8 +95,8 @@ export default function ChatWidget() {
                         {/* Header */}
                         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
                             <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-full bg-accent-primary/20 flex items-center justify-center">
-                                    <span className="text-accent-primary font-bold text-sm">ML</span>
+                                <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center">
+                                    <span className="text-accent font-bold text-sm">ML</span>
                                 </div>
                                 <div>
                                     <h3 className="text-white font-semibold text-sm">
@@ -121,8 +121,8 @@ export default function ChatWidget() {
                             {/* Welcome Message */}
                             {messages.length === 0 && (
                                 <div className="text-center py-8">
-                                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent-primary/10 flex items-center justify-center">
-                                        <MessageCircle size={28} className="text-accent-primary" />
+                                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                                        <MessageCircle size={28} className="text-accent" />
                                     </div>
                                     <h4 className="text-white font-medium mb-2">
                                         Hi! I'm {PORTFOLIO_CONTEXT.personal.name.split(" ")[0]}'s AI assistant
@@ -163,7 +163,7 @@ export default function ChatWidget() {
                                         onChange={handleInputChange}
                                         placeholder="Ask about Leon's work..."
                                         disabled={isLoading}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-20 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-accent-primary/50 transition-colors disabled:opacity-50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-20 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-accent/50 transition-colors disabled:opacity-50"
                                     />
                                     <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
                                         <span
@@ -177,7 +177,7 @@ export default function ChatWidget() {
                                         <button
                                             type="submit"
                                             disabled={!input.trim() || isLoading}
-                                            className="w-8 h-8 rounded-lg bg-accent-primary text-white flex items-center justify-center disabled:opacity-30 hover:bg-accent-primary/80 transition-colors"
+                                            className="w-8 h-8 rounded-lg bg-accent text-white flex items-center justify-center disabled:opacity-30 hover:bg-accent/80 transition-colors"
                                         >
                                             <Send size={16} />
                                         </button>

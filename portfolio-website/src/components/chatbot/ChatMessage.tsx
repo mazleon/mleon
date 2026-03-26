@@ -20,8 +20,8 @@ export function ChatMessageBubble({ role, content }: ChatMessageProps) {
             {/* Avatar */}
             <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${isUser
-                        ? "bg-accent-primary/20 text-accent-primary"
-                        : "bg-accent-secondary/20 text-accent-secondary"
+                        ? "bg-accent/20 text-accent"
+                        : "bg-accent-light/20 text-accent-light"
                     }`}
             >
                 {isUser ? <User size={14} /> : <Bot size={14} />}
@@ -30,7 +30,7 @@ export function ChatMessageBubble({ role, content }: ChatMessageProps) {
             {/* Message Bubble */}
             <div
                 className={`max-w-[80%] px-3 py-2 rounded-xl text-sm leading-relaxed ${isUser
-                        ? "bg-accent-primary text-white rounded-tr-sm"
+                        ? "bg-accent text-white rounded-tr-sm"
                         : "bg-white/10 text-gray-200 rounded-tl-sm"
                     }`}
             >
@@ -48,7 +48,7 @@ export function TypingIndicator() {
             animate={{ opacity: 1 }}
             className="flex gap-2"
         >
-            <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 bg-accent-secondary/20 text-accent-secondary">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 bg-accent-light/20 text-accent-light">
                 <Bot size={14} />
             </div>
             <div className="bg-white/10 px-4 py-3 rounded-xl rounded-tl-sm flex gap-1">

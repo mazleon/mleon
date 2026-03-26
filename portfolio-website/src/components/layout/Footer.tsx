@@ -1,80 +1,47 @@
-import { AiFillGithub, AiFillLinkedin, AiOutlineTwitter, AiFillHeart } from "react-icons/ai";
+import { Github, Linkedin, Twitter } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
-import { motion } from "framer-motion";
-import { Tooltip } from "../ui/tooltip";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    {
-      name: "LinkedIn",
-      icon: <AiFillLinkedin size={20} />,
-      url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
-    },
-    {
-      name: "GitHub",
-      icon: <AiFillGithub size={20} />,
-      url: "https://github.com/mazleon",
-    },
-    {
-      name: "Twitter",
-      icon: <AiOutlineTwitter size={20} />,
-      url: "https://x.com/LeonMazharul?lang=en",
-    },
-    {
-      name: "Google Scholar",
-      icon: <SiGooglescholar size={20} />,
-      url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en",
-    },
+    { name: "GitHub", url: "https://github.com/mazleon", icon: <Github size={16} /> },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", icon: <Linkedin size={16} /> },
+    { name: "Twitter", url: "https://x.com/LeonMazharul?lang=en", icon: <Twitter size={16} /> },
+    { name: "Scholar", url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en", icon: <SiGooglescholar size={16} /> },
   ];
 
   return (
-    <footer className="bg-primary-light py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <motion.p
-              className="text-secondary-dark text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              &copy; {currentYear} Mazharul Islam Leon. All rights reserved.
-            </motion.p>
+    <footer className="bg-primary border-t border-surface-light py-12">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Left */}
+          <div className="text-center md:text-left">
+            <p className="text-sm text-muted font-body">
+              &copy; {currentYear} Mazharul Islam Leon
+            </p>
           </div>
 
-          <div className="flex space-x-4">
-            {socialLinks.map((link, index) => (
-              <Tooltip key={link.name} content={link.name}>
-                <motion.a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="text-secondary-dark hover:text-accent-primary transition-colors"
-                  aria-label={link.name}
-                  whileHover={{ y: -3 }}
-                >
-                  {link.icon}
-                </motion.a>
-              </Tooltip>
+          {/* Social Links */}
+          <div className="flex items-center gap-6">
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-cream transition-colors duration-200 cursor-pointer"
+                aria-label={link.name}
+              >
+                {link.icon}
+              </a>
             ))}
           </div>
-        </div>
 
-        <div className="mt-6 text-center">
-          <motion.p
-            className="text-xs text-secondary-dark flex items-center justify-center gap-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            Made with <AiFillHeart className="inline-block text-red-500" /> by using React,
-            TypeScript, Tailwind CSS and Framer Motion
-          </motion.p>
+          {/* Right */}
+          <p className="text-xs text-muted/50 font-mono">
+            Built with precision
+          </p>
         </div>
       </div>
     </footer>

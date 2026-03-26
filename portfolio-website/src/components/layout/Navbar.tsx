@@ -1,195 +1,139 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { AiOutlineMenu, AiOutlineClose, AiOutlineBulb, AiFillBulb } from "react-icons/ai";
-import { useTheme } from "../theme/ThemeProvider";
-import { Button } from "../ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Tooltip } from "../ui/tooltip";
 
 const Navbar = () => {
-  const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Track scrolling for navbar background change
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Publications", href: "#publications" },
+    { name: "Work", href: "#experience" },
     { name: "Projects", href: "#projects" },
-    { name: "Skills", href: "#skills" },
+    { name: "Research", href: "#publications" },
     { name: "Blog", href: "#blog" },
-    { name: "ML Demo", href: "#ml-demo" },
     { name: "Contact", href: "#contact" },
   ];
-  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    const el = document.getElementById(href.replace("#", ""));
+    if (el) {
+      const offset = 100;
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled || mobileMenuOpen
-          ? "bg-primary/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      )}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <motion.a
-            href="#home"
-            onClick={(e) => handleNavClick(e, "#home")}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-xl font-bold text-secondary cursor-pointer"
-          >
-            <span className="text-accent-primary">ML</span> Leon
-          </motion.a>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="text-secondary hover:text-accent-secondary relative group text-sm font-medium cursor-pointer"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-secondary transition-all duration-300 group-hover:w-full" />
-              </motion.a>
-            ))}
-          </nav>
-
-          <div className="flex items-center space-x-4">
-            {/* Status Badge */}
-            <div className="hidden lg:flex items-center space-x-2 mr-2 bg-[#18181B]/50 border border-white/10 px-3 py-1.5 rounded-full hover:border-accent-primary/50 transition-colors cursor-default backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              <span className="text-xs font-mono text-gray-300">Available for Projects</span>
-            </div>
-
-            {/* Dark/Light Mode Toggle */}
-            <Tooltip
-              content={
-                theme === "dark"
-                  ? "Switch to light mode"
-                  : "Switch to dark mode"
-              }
-            >
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
-                className="p-2 rounded-full text-secondary hover:bg-primary-light transition-colors"
-                onClick={toggleTheme}
-                aria-label={
-                  theme === "dark"
-                    ? "Switch to light mode"
-                    : "Switch to dark mode"
-                }
-              >
-                {theme === "dark" ? <AiFillBulb size={20} /> : <AiOutlineBulb size={20} />}
-              </motion.button>
-            </Tooltip>
-
-            {/* Contact Button (Desktop) */}
-            <div className="hidden lg:block">
-              <Button
-                variant="default"
-                size="sm"
-                className="ml-4"
-                onClick={(e: any) => handleNavClick(e, "#contact")}
-              >
-                Contact
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="lg:hidden p-2 rounded-full text-secondary hover:bg-primary-light transition-colors z-50"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? <AiOutlineClose size={26} /> : <AiOutlineMenu size={26} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{
-          opacity: mobileMenuOpen ? 1 : 0,
-          height: mobileMenuOpen ? "auto" : 0,
-        }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="lg:hidden overflow-hidden bg-primary shadow-2xl border-t border-white/5"
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-5">
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className={cn(
+          "flex items-center justify-between w-full max-w-5xl px-6 py-3 rounded-full transition-all duration-300",
+          isScrolled || mobileMenuOpen
+            ? "bg-primary/90 backdrop-blur-lg border border-surface-light shadow-2xl shadow-black/20"
+            : "bg-transparent"
+        )}
       >
-        <div className="container mx-auto px-4 py-8">
-          <nav className="flex flex-col space-y-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-secondary text-lg font-body hover:text-accent-primary transition-colors py-2 border-b border-white/5 last:border-0 block w-full cursor-pointer"
-              >
-                {link.name}
-              </a>
-            ))}
-            <Button
-              variant="default"
-              size="lg"
-              className="mt-4 w-full text-lg h-14"
-              onClick={(e: any) => handleNavClick(e, "#contact")}
+        {/* Logo */}
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, "#home")}
+          className="text-lg font-heading font-bold text-cream tracking-tight cursor-pointer hover:text-accent transition-colors"
+        >
+          ML<span className="text-accent">.</span>
+        </a>
+
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-sm font-body text-muted hover:text-cream transition-colors duration-200 cursor-pointer relative group"
             >
-              Get in Touch
-            </Button>
-          </nav>
+              {link.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
+            </a>
+          ))}
         </div>
-      </motion.div>
+
+        {/* CTA + Mobile Toggle */}
+        <div className="flex items-center gap-3">
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
+            className="hidden md:inline-flex text-sm font-medium font-body px-5 py-2 rounded-full bg-accent text-white hover:bg-accent/90 transition-all duration-200 cursor-pointer"
+          >
+            Let's Talk
+          </a>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-cream cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            <div className="w-5 h-4 flex flex-col justify-between">
+              <span className={cn(
+                "w-full h-px bg-cream transition-all duration-300 origin-left",
+                mobileMenuOpen && "rotate-45 translate-y-px"
+              )} />
+              <span className={cn(
+                "w-full h-px bg-cream transition-all duration-300",
+                mobileMenuOpen && "opacity-0"
+              )} />
+              <span className={cn(
+                "w-full h-px bg-cream transition-all duration-300 origin-left",
+                mobileMenuOpen && "-rotate-45 -translate-y-px"
+              )} />
+            </div>
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-20 left-4 right-4 bg-surface border border-surface-light rounded-2xl p-6 shadow-2xl shadow-black/40 md:hidden z-40"
+          >
+            <nav className="flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-cream text-lg font-body py-2 hover:text-accent transition-colors cursor-pointer"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="mt-2 text-center font-medium font-body px-5 py-3 rounded-full bg-accent text-white hover:bg-accent/90 transition-all cursor-pointer"
+              >
+                Let's Talk
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
