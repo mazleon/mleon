@@ -2,9 +2,10 @@ import SectionHeader from "../ui/SectionHeader";
 import {
   SiPython, SiTensorflow, SiPytorch, SiReact, SiDocker, SiKubernetes,
   SiFastapi, SiDjango, SiFlask, SiPostgresql, SiMongodb, SiRedis,
-  SiAmazonwebservices, SiGit, SiLinux, SiJupyter, SiOpencv, SiLangchain,
+  SiGit, SiLinux, SiJupyter, SiOpencv, SiLangchain,
 } from "react-icons/si";
 import { TbBrain, TbDatabaseSearch, TbCloudComputing, TbCode, TbTools, TbBrandCpp, TbSql } from "react-icons/tb";
+import { FaAws } from "react-icons/fa";
 import MotionWrapper from "@/components/common/MotionWrapper";
 
 interface SkillItem {
@@ -79,7 +80,7 @@ const skillCategories: SkillCategory[] = [
     title: "DevOps & Cloud",
     icon: <TbCloudComputing className="w-5 h-5" />,
     skills: [
-      { name: "AWS", icon: <SiAmazonwebservices /> },
+      { name: "AWS", icon: <FaAws /> },
       { name: "Docker", icon: <SiDocker /> },
       { name: "Kubernetes", icon: <SiKubernetes /> },
       { name: "CI/CD" },
