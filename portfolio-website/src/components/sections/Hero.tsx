@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
+import ImpactBar from "../ui/ImpactBar";
 
 const Hero: React.FC = () => {
   const socialLinks = [
@@ -26,7 +27,7 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-sm font-mono uppercase tracking-[0.25em] text-accent mb-6"
             >
-              Senior Software Engineer · AI/ML
+              Senior AI/ML Engineer & Researcher
             </motion.p>
 
             {/* Name — Editorial oversized */}
@@ -47,32 +48,41 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-lg md:text-xl text-cream-dark font-body leading-relaxed max-w-xl mb-10"
+              className="text-lg md:text-xl text-cream-dark font-body leading-relaxed max-w-xl mb-8"
             >
               Bridging cutting-edge AI research with production-grade engineering.
               From computer vision systems to agentic AI — building intelligent solutions that matter.
             </motion.p>
-            {/* ... rest of CTA and social links remain same ... */}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+            >
+              <ImpactBar />
+            </motion.div>
             
             {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-wrap gap-4 mb-12"
             >
               <button
-                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("publications")?.scrollIntoView({ behavior: "smooth" })}
                 className="btn-primary"
               >
-                View Work
+                View Research
               </button>
-              <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="btn-outline"
+              <a
+                href="/AI_Resume_Mazharul_Islam_.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline inline-flex items-center justify-center"
               >
-                Contact Me
-              </button>
+                Download Resume
+              </a>
             </motion.div>
 
             {/* Social Links */}

@@ -27,37 +27,40 @@ const Projects = () => {
 
   const projects: Project[] = [
     {
+      id: "ekyc-platform",
+      title: "eKYC Biometric Onboarding Platform",
+      description: "Scale: 20M+ fintech users · Banks: Southeast Bank, Telecash · Regulatory: BFIU compliant",
+      longDescription: `**Problem:** Manual KYC onboarding took 48 hours and required physical branch visits, creating 67% drop-off in digital banking sign-ups.\n\n**Approach:** Built a 5-stage AI pipeline: liveness detection → face extraction → NID/passport OCR (fine-tuned TrOCR) → ArcFace face matching → ML risk scoring ensemble. Async architecture on SQS handles ~385 submissions/hour peak.\n\n**Result:** Onboarding reduced from 48 hours to under 5 minutes. Auto-approval rate of 85%+ while maintaining BFIU regulatory compliance. System has served 20M+ users since deployment.`,
+      category: ["ml", "software"],
+      technologies: ["PyTorch", "TrOCR", "InsightFace", "AWS SageMaker", "Docker", "MLflow"],
+      image: "/images/projects/face-recognition.png",
+    },
+    {
       id: "leaf-grading",
       title: "Digital Leaf Grading System",
-      description: "AI-powered system transforming tobacco leaf grading with 95% accuracy using custom CNN architectures.",
-      longDescription: "The Digital Leaf Grading System for BAT (British American Tobacco) represents a significant advancement in agricultural quality control. This system uses sophisticated computer vision algorithms and deep learning models to analyze images of tobacco leaves and classify them into different quality grades based on color, texture, size, and defects.\n\nThe system was designed to replace traditional manual inspection methods, which were time-consuming and subject to human error. By automating the grading process, we achieved a 95% accuracy rate while processing leaves 10x faster than human inspectors.\n\nThe solution incorporates a custom-trained convolutional neural network that can identify subtle leaf characteristics and categorize them according to BAT's specific quality criteria.",
+      description: "Scale: BAT Supply Chain · Accuracy: 95%+ · Impact: 3x Processing Speed",
+      longDescription: `**Problem:** Traditional manual inspection methods for tobacco leaves were time-consuming and subject to subjective human error, creating bottlenecks in the supply chain.\n\n**Approach:** Developed and deployed sophisticated computer vision algorithms and custom-trained CNN models to analyze images of tobacco leaves, classifying them into different quality grades based on color, texture, size, and defects. Integrated with MLflow for tracking.\n\n**Result:** Achieved a 95% accuracy rate while processing leaves 10x faster than human inspectors. Boosted overall grading consistency by 25%.`,
       category: ["ml", "research"],
-      technologies: ["Python", "TensorFlow", "OpenCV", "Flask", "React", "Docker"],
+      technologies: ["Python", "TensorFlow", "OpenCV", "AWS", "Docker"],
       image: "/images/projects/leaf-grading-system.png",
     },
     {
       id: "anomaly-detection",
-      title: "Suspicious Anomaly Detection",
-      description: "Real-time security intelligence platform using unsupervised learning to detect behavioral anomalies.",
+      title: "Real-time Video Anomaly Detection",
+      description: "Scale: Production Edge Devices · Latency: <50ms · Hardware: NVIDIA Jetson",
+      longDescription: `**Problem:** Security systems generated too many false positives and lacked the latency required for real-time intervention at the edge.\n\n**Approach:** Designed and implemented a hybrid YOLO + ML model specifically optimized for NVIDIA Jetson edge devices using TensorRT and DeepStream.\n\n**Result:** Achieved <50ms inference latency at 30 FPS in production environments, significantly reducing false alarms while maintaining high detection rates.`,
       category: ["ml", "software"],
-      technologies: ["Python", "PyTorch", "Kafka", "ElasticSearch", "Docker", "AWS"],
+      technologies: ["Python", "PyTorch", "TensorRT", "DeepStream", "Docker", "Edge AI"],
       image: "/images/projects/anomaly-detection.png",
     },
     {
       id: "ai-chatbot",
-      title: "Agent Based AI Chatbot",
-      description: "Context-aware conversational agent using orchestrated NLP modules for superior customer engagement.",
+      title: "Agent-Based AI Chatbot",
+      description: "Scale: 10K+ Daily Queries · Response Time: -60%",
+      longDescription: `**Problem:** Customer support centers were overwhelmed with routine queries, leading to long wait times and poor user experience.\n\n**Approach:** Built and optimized multiple LLM-powered chatbot systems using LangChain, Google ADK, and vector databases (Chroma, Qdrant) for scalable RAG implementation.\n\n**Result:** Autonomously handled 10K+ daily queries and reduced customer support average response time by 60%.`,
       category: ["ml", "software"],
-      technologies: ["Python", "NLTK", "TensorFlow", "Node.js", "MongoDB", "Docker"],
+      technologies: ["LangChain", "LLMs", "Qdrant", "Chroma", "Python", "Docker"],
       image: "/images/projects/ai-chatbot.png",
-    },
-    {
-      id: "face-recognition",
-      title: "Biometric Verification System",
-      description: "High-security identity verification platform with anti-spoofing liveness detection capabilities.",
-      category: ["ml", "software"],
-      technologies: ["Python", "Dlib", "OpenCV", "FastAPI", "React", "TensorFlow"],
-      image: "/images/projects/face-recognition.png",
     },
   ];
 
@@ -76,9 +79,9 @@ const Projects = () => {
     <section id="projects" className="section bg-primary relative">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <SectionHeader
-          label="04 — Projects"
+          label="04 — Production Deployments"
           title="Featured Work"
-          subtitle="Innovations in AI and Software Engineering"
+          subtitle="Real-world systems shipped at scale"
         />
 
         {/* Category Filter */}
@@ -218,7 +221,11 @@ const Projects = () => {
                 <div className="p-8 overflow-y-auto">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-2">
-                      <p className="text-cream-dark font-body leading-relaxed">{selectedProject.longDescription || selectedProject.description}</p>
+                      {selectedProject.longDescription ? selectedProject.longDescription.split('\n\n').map((paragraph, i) => (
+                        <p key={i} className="text-cream-dark font-body leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-cream font-bold">$1</strong>') }} />
+                      )) : (
+                        <p className="text-cream-dark font-body leading-relaxed">{selectedProject.description}</p>
+                      )}
                     </div>
                     <div className="space-y-6">
                       <div>

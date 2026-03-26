@@ -17,88 +17,47 @@ interface SkillCategory {
   id: string;
   title: string;
   icon: React.ReactNode;
+  subtitle?: string;
+  span?: "wide" | "normal" | "full" | "half";
   skills: SkillItem[];
-  span?: "wide" | "normal";
 }
 
 const skillCategories: SkillCategory[] = [
   {
-    id: "ml-ai",
-    title: "Machine Learning & AI",
-    icon: <TbBrain className="w-5 h-5" />,
-    span: "wide",
-    skills: [
-      { name: "Deep Learning", icon: <SiTensorflow /> },
-      { name: "Computer Vision", icon: <SiOpencv /> },
-      { name: "NLP / LLMs", icon: <SiLangchain /> },
-      { name: "TensorFlow", icon: <SiTensorflow /> },
-      { name: "PyTorch", icon: <SiPytorch /> },
-      { name: "Agentic AI", icon: <SiLangchain /> },
-      { name: "CrewAI", icon: <TbBrain /> },
-      { name: "LangChain", icon: <SiLangchain /> },
-    ],
-  },
-  {
-    id: "programming",
-    title: "Programming",
-    icon: <TbCode className="w-5 h-5" />,
-    span: "wide",
-    skills: [
-      { name: "Python", icon: <SiPython /> },
-      { name: "C / C++", icon: <TbBrandCpp /> },
-      { name: "SQL", icon: <TbSql /> },
-      { name: "Bash", icon: <SiLinux /> },
-      { name: "JavaScript", icon: <SiReact /> },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend & APIs",
-    icon: <TbCode className="w-5 h-5" />,
-    skills: [
-      { name: "FastAPI", icon: <SiFastapi /> },
-      { name: "Django", icon: <SiDjango /> },
-      { name: "Flask", icon: <SiFlask /> },
-      { name: "RESTful APIs" },
-      { name: "GraphQL" },
-    ],
-  },
-  {
-    id: "database",
-    title: "Databases",
-    icon: <TbDatabaseSearch className="w-5 h-5" />,
-    skills: [
-      { name: "PostgreSQL", icon: <SiPostgresql /> },
-      { name: "MongoDB", icon: <SiMongodb /> },
-      { name: "Redis", icon: <SiRedis /> },
-      { name: "VectorDB" },
-      { name: "Neo4j" },
-    ],
-  },
-  {
-    id: "devops",
-    title: "DevOps & Cloud",
+    id: "tier1",
+    title: "Tier 1: Production-Grade",
     icon: <TbCloudComputing className="w-5 h-5" />,
+    span: "wide",
+    subtitle: "Shipped at scale",
     skills: [
-      { name: "AWS", icon: <FaAws /> },
-      { name: "Docker", icon: <SiDocker /> },
-      { name: "Kubernetes", icon: <SiKubernetes /> },
-      { name: "CI/CD" },
-      { name: "MLFlow" },
+      { name: "YOLO v12" }, { name: "Vision Transformers" }, { name: "TensorRT INT8" },
+      { name: "NVIDIA Jetson DeepStream" }, { name: "eKYC / ArcFace Biometrics" }, { name: "LangChain" },
+      { name: "LangGraph" }, { name: "Qdrant" }, { name: "Chroma" }, { name: "RAGAS" },
+      { name: "MLflow" }, { name: "Docker" }, { name: "AWS SageMaker" }, { name: "PyTorch" }, { name: "Python" }
     ],
   },
   {
-    id: "tools",
-    title: "Tools & Workflow",
-    icon: <TbTools className="w-5 h-5" />,
+    id: "tier2",
+    title: "Tier 2: Research-Level",
+    icon: <TbBrain className="w-5 h-5" />,
+    subtitle: "Published work",
     skills: [
-      { name: "Git", icon: <SiGit /> },
-      { name: "Jupyter", icon: <SiJupyter /> },
-      { name: "Linux", icon: <SiLinux /> },
-      { name: "Agile/Scrum" },
-      { name: "VS Code" },
+      { name: "Spatiotemporal Deep Learning" }, { name: "Object Detection (YOLO family)" },
+      { name: "Face Recognition Systems" }, { name: "OCR (TrOCR)" },
+      { name: "Biometric Pipeline Design" }, { name: "Deep Learning for Health/Environment Data" }
     ],
   },
+  {
+    id: "tier3", 
+    title: "Tier 3: Actively Building",
+    icon: <TbCode className="w-5 h-5" />,
+    subtitle: "Portfolio projects",
+    skills: [
+      { name: "Google ADK Multi-Agent Systems" }, { name: "QLoRA Fine-tuning" },
+      { name: "RAG Evaluation Frameworks" }, { name: "Vision-Language Models (LLaVA / Florence-2)" },
+      { name: "Knowledge Distillation" }
+    ],
+  }
 ];
 
 const Skills = () => {
@@ -112,7 +71,7 @@ const Skills = () => {
         />
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {skillCategories.map((category, index) => (
             <MotionWrapper
               key={category.id}
@@ -121,7 +80,7 @@ const Skills = () => {
             >
               <div className="editorial-card h-full group hover:border-accent/20 cursor-default">
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 rounded-lg bg-surface-light text-muted group-hover:text-accent group-hover:bg-accent/10 transition-all duration-200">
                     {category.icon}
                   </div>
@@ -129,6 +88,11 @@ const Skills = () => {
                     {category.title}
                   </h3>
                 </div>
+                {category.subtitle && (
+                  <p className="text-xs font-mono text-accent uppercase tracking-wider mb-5 ml-12">
+                    {category.subtitle}
+                  </p>
+                )}
 
                 {/* Skills */}
                 <div className="flex flex-wrap gap-2">

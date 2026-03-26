@@ -35,23 +35,19 @@ const About = () => {
             <div className="lg:col-span-7 space-y-8">
               <MotionWrapper delay={0.3}>
                 <h3 className="text-3xl md:text-4xl font-heading font-bold text-cream leading-tight">
-                  Crafting Intelligence
+                  I build AI systems that
                   <br />
-                  <span className="text-accent">via Code</span>
+                  <span className="text-accent">ship at scale</span>
                 </h3>
               </MotionWrapper>
 
               <MotionWrapper delay={0.4}>
                 <div className="space-y-5 text-cream-dark text-lg leading-relaxed font-body">
                   <p>
-                    I'm a machine learning engineer with over{" "}
-                    <span className="text-cream font-semibold">5+ years</span> of experience
-                    building scalable AI-driven solutions that solve tangible real-world problems.
+                    Over <span className="text-cream font-semibold">4.5+ years</span> at RedDot Digital Ltd., I've deployed computer vision pipelines, eKYC biometric platforms, and LLM/RAG systems serving over <span className="text-cream font-semibold">50 million users</span> across fintech and telecoms in Bangladesh. My edge AI systems run at <span className="text-accent">sub-50ms latency</span> on NVIDIA Jetson hardware in production — not in a notebook.
                   </p>
                   <p>
-                    From <span className="text-accent">Computer Vision systems</span> for BAT to
-                    Agent-Based Chatbots for RedDot, I specialize in bridging the gap between
-                    cutting-edge research and production-grade software.
+                    Alongside production work, I've published <span className="text-cream font-semibold">6 peer-reviewed papers</span> in IEEE Xplore and Springer venues covering computer vision, spatiotemporal deep learning, and biometric AI. My active research interest is the gap between automated RAG evaluation metrics and real-world user trust — a problem I first encountered at production scale and now want to study formally.
                   </p>
                 </div>
               </MotionWrapper>
@@ -60,7 +56,7 @@ const About = () => {
               <MotionWrapper delay={0.5}>
                 <blockquote className="border-l-2 border-accent pl-6 py-2">
                   <p className="text-xl font-heading font-medium text-cream italic">
-                    "The best engineering happens at the intersection of research and production."
+                    "I'm currently pursuing senior AI/ML roles in Malaysia and exploring funded graduate research opportunities for Fall 2026."
                   </p>
                 </blockquote>
               </MotionWrapper>

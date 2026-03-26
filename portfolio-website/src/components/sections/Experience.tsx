@@ -19,13 +19,14 @@ const Experience = () => {
       company: "RedDot Digital Limited",
       duration: "Aug 2021 — Present",
       description: [
-        "Architected an Agent-Based AI Chatbot using advanced NLP and orchestration patterns (LangChain, CrewAI).",
-        "Designed the Digital Leaf Grading System for BAT, leveraging custom Computer Vision models for 95%+ accuracy.",
-        "Built a real-time Suspicious Anomaly Detection system processing high-throughput data streams.",
-        "Led end-to-end development of a Biometric Verification System with liveness detection.",
-        "Managed cloud infrastructure (AWS) and CI/CD pipelines for scalable AI production deployments.",
+        "Reduced onboarding from 48 hours to under 5 minutes for 20M+ fintech users by designing an OCR + face matching eKYC platform.",
+        "Achieved <50ms inference latency at 30 FPS on NVIDIA Jetson edge devices by optimizing a hybrid YOLO + ML anomaly detection model.",
+        "Served 30M+ telecom users with secure biometric verification, achieving 50+ TPS on CPU with 99.2% accuracy.",
+        "Reduced customer support response time by 60% and autonomously handled 10K+ daily queries via LLM-powered chatbots (LangChain, Qdrant).",
+        "Boosted grading accuracy by 25% and reduced manual processing time by 3x through an automated CV pipeline tracked via MLflow.",
+        "Transitioned 3 out of 5+ Proof of Concept (PoC) AI projects into revenue-generating products."
       ],
-      technologies: ["Python", "TensorFlow", "PyTorch", "Computer Vision", "NLP", "LLM", "CrewAI", "LangChain", "FastAPI", "React", "AWS", "Docker"],
+      technologies: ["Python", "PyTorch", "TensorRT", "Computer Vision", "LLM", "RAG", "LangChain", "FastAPI", "AWS SageMaker", "Docker", "MLflow"],
     },
     {
       id: 2,
@@ -33,10 +34,9 @@ const Experience = () => {
       company: "CMED Health Limited",
       duration: "Sep 2020 — July 2021",
       description: [
-        "Developed predictive ML models for early medical diagnostics and health trend analysis.",
-        "Implemented robust data processing pipelines for IoT medical sensor data.",
-        "Collaborated with medical professionals to fine-tune algorithms for clinical accuracy.",
-        "Authored research papers on health data analytics and predictive modeling.",
+        "Enabled data-driven clinical decisions by building extraction and ETL pipelines from large SQL dumps.",
+        "Supported medical diagnostic research through rigorous data preprocessing and exploratory analysis.",
+        "Co-authored peer-reviewed research papers on health data analytics and predictive modeling."
       ],
       technologies: ["Python", "Scikit-learn", "Pandas", "SQL", "Visualization", "Statistics"],
     },
