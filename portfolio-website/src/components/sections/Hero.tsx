@@ -14,9 +14,9 @@ const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-hidden bg-primary pt-28 pb-16 lg:pt-0 lg:pb-0"
+      className="min-h-screen flex items-center relative overflow-hidden bg-primary pt-32 pb-16 lg:pt-24 lg:pb-16"
     >
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10 mt-12 lg:mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center min-h-screen">
           {/* Text — takes 8 cols on large screens, ensuring no overlap */}
           <div className="lg:col-span-8 order-2 lg:order-1 max-w-4xl">

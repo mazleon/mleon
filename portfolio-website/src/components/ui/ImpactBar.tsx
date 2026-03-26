@@ -5,7 +5,7 @@ const counters = [
   { value: 50, suffix: "M+", label: "Users in Production", prefix: "" },
   { value: 6, suffix: "", label: "IEEE / Springer Publications", prefix: "" },
   { value: 50, suffix: "ms", label: "Edge Inference Latency", prefix: "<" },
-  { value: 4.5, suffix: "+", label: "Years Production ML", prefix: "", isFloat: true },
+  { value: 5, suffix: "+", label: "Years Production ML", prefix: "", isFloat: false },
 ];
 
 const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
