@@ -5,7 +5,13 @@ const counters = [
   { value: 50, suffix: "M+", label: "Users in Production", prefix: "" },
   { value: 6, suffix: "", label: "IEEE / Springer Publications", prefix: "" },
   { value: 50, suffix: "ms", label: "Edge Inference Latency", prefix: "<" },
-  { value: 5, suffix: "+", label: "Years Production ML", prefix: "", isFloat: false },
+  {
+    value: 5,
+    suffix: "+",
+    label: "Years Production ML",
+    prefix: "",
+    isFloat: false,
+  },
 ];
 
 const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
@@ -18,7 +24,7 @@ const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
       let start = 0;
       const duration = 1500;
       const increment = value / (duration / 16);
-      
+
       const timer = setInterval(() => {
         start += increment;
         if (start >= value) {
@@ -33,9 +39,14 @@ const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
   }, [isInView, value]);
 
   return (
-    <div ref={ref} className="flex flex-col gap-1.5 border-l-2 border-accent/20 pl-4 py-1">
+    <div
+      ref={ref}
+      className="flex flex-col gap-1.5 border-l-2 border-accent/20 pl-4 py-1"
+    >
       <div className="font-heading font-black text-3xl md:text-4xl text-cream tracking-tight">
-        {prefix}{isFloat ? count.toFixed(1) : Math.floor(count)}{suffix}
+        {prefix}
+        {isFloat ? count.toFixed(1) : Math.floor(count)}
+        {suffix}
       </div>
       <div className="text-[10px] md:text-xs font-mono text-muted uppercase tracking-widest">
         {label}

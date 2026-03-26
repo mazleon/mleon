@@ -44,10 +44,30 @@ const About = () => {
               <MotionWrapper delay={0.4}>
                 <div className="space-y-5 text-cream-dark text-lg leading-relaxed font-body">
                   <p>
-                    Over <span className="text-cream font-semibold">4.5+ years</span> at RedDot Digital Ltd., I've deployed computer vision pipelines, eKYC biometric platforms, and LLM/RAG systems serving over <span className="text-cream font-semibold">50 million users</span> across fintech and telecoms in Bangladesh. My edge AI systems run at <span className="text-accent">sub-50ms latency</span> on NVIDIA Jetson hardware in production — not in a notebook.
+                    Over{" "}
+                    <span className="text-cream font-semibold">4.5+ years</span>{" "}
+                    at RedDot Digital Ltd., I've deployed computer vision
+                    pipelines, eKYC biometric platforms, and LLM/RAG systems
+                    serving over{" "}
+                    <span className="text-cream font-semibold">
+                      50 million users
+                    </span>{" "}
+                    across fintech and telecoms in Bangladesh. My edge AI
+                    systems run at{" "}
+                    <span className="text-accent">sub-50ms latency</span> on
+                    NVIDIA Jetson hardware in production — not in a notebook.
                   </p>
                   <p>
-                    Alongside production work, I've published <span className="text-cream font-semibold">6 peer-reviewed papers</span> in IEEE Xplore and Springer venues covering computer vision, spatiotemporal deep learning, and biometric AI. My active research interest is the gap between automated RAG evaluation metrics and real-world user trust — a problem I first encountered at production scale and now want to study formally.
+                    Alongside production work, I've published{" "}
+                    <span className="text-cream font-semibold">
+                      6 peer-reviewed papers
+                    </span>{" "}
+                    in IEEE Xplore and Springer venues covering computer vision,
+                    spatiotemporal deep learning, and biometric AI. My active
+                    research interest is the gap between automated RAG
+                    evaluation metrics and real-world user trust — a problem I
+                    first encountered at production scale and now want to study
+                    formally.
                   </p>
                 </div>
               </MotionWrapper>
@@ -56,7 +76,9 @@ const About = () => {
               <MotionWrapper delay={0.5}>
                 <blockquote className="border-l-2 border-accent pl-6 py-2">
                   <p className="text-xl font-heading font-medium text-cream italic">
-                    "I'm currently pursuing senior AI/ML roles in Malaysia and exploring funded graduate research opportunities for Fall 2026."
+                    "I'm currently pursuing senior AI/ML roles in Malaysia and
+                    exploring funded graduate research opportunities for Fall
+                    2026."
                   </p>
                 </blockquote>
               </MotionWrapper>
@@ -66,16 +88,21 @@ const About = () => {
                 <div>
                   <p className="editorial-label">Core Technologies</p>
                   <div className="flex flex-wrap gap-2">
-                    {["Machine Learning", "System Design", "Cloud Native", "Computer Vision", "NLP", "React"].map(
-                      (skill) => (
-                        <span
-                          key={skill}
-                          className="px-4 py-2 text-sm font-body text-cream border border-surface-light rounded-full hover:border-accent/40 hover:text-accent transition-all duration-200 cursor-default"
-                        >
-                          {skill}
-                        </span>
-                      )
-                    )}
+                    {[
+                      "Machine Learning",
+                      "System Design",
+                      "Cloud Native",
+                      "Computer Vision",
+                      "NLP",
+                      "React",
+                    ].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-4 py-2 text-sm font-body text-cream border border-surface-light rounded-full hover:border-accent/40 hover:text-accent transition-all duration-200 cursor-default"
+                      >
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </MotionWrapper>
@@ -84,13 +111,21 @@ const About = () => {
               <MotionWrapper delay={0.7}>
                 <div className="flex flex-wrap gap-4 pt-4">
                   <button
-                    onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })}
+                    onClick={() =>
+                      document
+                        .getElementById("experience")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
                     className="btn-primary cursor-pointer"
                   >
                     My Experience
                   </button>
                   <button
-                    onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                    onClick={() =>
+                      document
+                        .getElementById("projects")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
                     className="btn-outline cursor-pointer"
                   >
                     View Projects

@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     }
-    
+
     // Force a re-render by toggling a class
     document.documentElement.classList.add("theme-transition");
     setTimeout(() => {

@@ -1,10 +1,10 @@
-import * as SI from 'react-icons/si';
+import * as SI from "react-icons/si";
 
 // This file is just to check what icons are available in the react-icons/si package
 const TestIcons = () => {
   // Log all available icons from SI
-  console.log('Available SI icons:', Object.keys(SI));
-  
+  console.log("Available SI icons:", Object.keys(SI));
+
   return (
     <div>
       <h1>Test Icons</h1>

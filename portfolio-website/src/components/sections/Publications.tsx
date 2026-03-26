@@ -18,16 +18,28 @@ const Publications = () => {
           <MotionWrapper delay={0.2}>
             <div className="grid grid-cols-3 gap-px bg-surface-light rounded-2xl overflow-hidden">
               <div className="bg-primary p-8 text-center">
-                <p className="text-4xl font-heading font-bold text-cream mb-1">{scholarMetrics.citations}</p>
-                <p className="text-xs font-mono text-muted uppercase tracking-wider">Citations</p>
+                <p className="text-4xl font-heading font-bold text-cream mb-1">
+                  {scholarMetrics.citations}
+                </p>
+                <p className="text-xs font-mono text-muted uppercase tracking-wider">
+                  Citations
+                </p>
               </div>
               <div className="bg-primary p-8 text-center">
-                <p className="text-4xl font-heading font-bold text-cream mb-1">{scholarMetrics.hIndex}</p>
-                <p className="text-xs font-mono text-muted uppercase tracking-wider">h-index</p>
+                <p className="text-4xl font-heading font-bold text-cream mb-1">
+                  {scholarMetrics.hIndex}
+                </p>
+                <p className="text-xs font-mono text-muted uppercase tracking-wider">
+                  h-index
+                </p>
               </div>
               <div className="bg-primary p-8 text-center">
-                <p className="text-4xl font-heading font-bold text-cream mb-1">{scholarMetrics.i10Index}</p>
-                <p className="text-xs font-mono text-muted uppercase tracking-wider">i10-index</p>
+                <p className="text-4xl font-heading font-bold text-cream mb-1">
+                  {scholarMetrics.i10Index}
+                </p>
+                <p className="text-xs font-mono text-muted uppercase tracking-wider">
+                  i10-index
+                </p>
               </div>
             </div>
           </MotionWrapper>
@@ -35,7 +47,9 @@ const Publications = () => {
           {/* Publications List */}
           <div>
             <MotionWrapper delay={0.3}>
-              <h3 className="text-xl font-heading font-bold text-cream mb-6">Selected Publications</h3>
+              <h3 className="text-xl font-heading font-bold text-cream mb-6">
+                Selected Publications
+              </h3>
             </MotionWrapper>
 
             <div className="space-y-4">
@@ -52,7 +66,9 @@ const Publications = () => {
                       {pub.authors.map((author, idx) => (
                         <span key={idx}>
                           {author === "Mazharul Islam Leon" ? (
-                            <span className="text-accent font-medium">{author}</span>
+                            <span className="text-accent font-medium">
+                              {author}
+                            </span>
                           ) : (
                             author
                           )}
@@ -66,24 +82,38 @@ const Publications = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           {pub.venueType === "IEEE" && (
-                            <span className="px-2 py-0.5 text-[10px] font-mono bg-[#1a3a5c] text-blue-400 rounded uppercase border border-blue-400/20">IEEE</span>
+                            <span className="px-2 py-0.5 text-[10px] font-mono bg-[#1a3a5c] text-blue-400 rounded uppercase border border-blue-400/20">
+                              IEEE
+                            </span>
                           )}
                           {pub.venueType === "Springer" && (
-                            <span className="px-2 py-0.5 text-[10px] font-mono bg-[#3d2000] text-orange-400 rounded uppercase border border-orange-400/20">Springer</span>
+                            <span className="px-2 py-0.5 text-[10px] font-mono bg-[#3d2000] text-orange-400 rounded uppercase border border-orange-400/20">
+                              Springer
+                            </span>
                           )}
-                          <span className="text-xs font-mono text-muted">{pub.venue}</span>
+                          <span className="text-xs font-mono text-muted">
+                            {pub.venue}
+                          </span>
                           <span className="text-xs text-muted/50">·</span>
-                          <span className="text-xs text-cream bg-surface-light px-2 py-0.5 rounded shadow-sm">{pub.year}</span>
+                          <span className="text-xs text-cream bg-surface-light px-2 py-0.5 rounded shadow-sm">
+                            {pub.year}
+                          </span>
                         </div>
                         <span className="px-3 py-1 text-xs font-mono text-accent bg-accent/10 rounded-full">
                           {pub.citations} cited
                         </span>
                       </div>
-                      
+
                       {pub.problem && pub.result && (
                         <div className="text-[13px] leading-relaxed mt-2 text-muted">
-                          <p className="mb-1"><em className="text-cream-dark">Problem:</em> {pub.problem}</p>
-                          <p><em className="text-cream-dark">Result:</em> {pub.result}</p>
+                          <p className="mb-1">
+                            <em className="text-cream-dark">Problem:</em>{" "}
+                            {pub.problem}
+                          </p>
+                          <p>
+                            <em className="text-cream-dark">Result:</em>{" "}
+                            {pub.result}
+                          </p>
                         </div>
                       )}
                     </div>

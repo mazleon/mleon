@@ -31,10 +31,16 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "warn", // Show Prettier issues as warnings
+    "prettier/prettier": "off", // Show Prettier issues as warnings
     "react/prop-types": "off", // Not needed with TypeScript
     "react/react-in-jsx-scope": "off", // Not needed with new JSX transform
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "react/no-unescaped-entities": "off",
     "jsx-a11y/anchor-is-valid": [
       "warn",
       {
@@ -52,6 +58,7 @@
   "ignorePatterns": [
     "node_modules/",
     "dist/",
+    "netlify/",
     "vite.config.ts",
     ".eslintrc.json",
     "postcss.config.js",

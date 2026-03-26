@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface OptimizedImageProps {
   src: string;
@@ -19,7 +19,7 @@ interface OptimizedImageProps {
 const OptimizedImage = ({
   src,
   alt,
-  className = '',
+  className = "",
   width,
   height,
   fallback,
@@ -33,8 +33,8 @@ const OptimizedImage = ({
   };
 
   // Extract file extension to determine image type
-  const fileExtension = src.split('.').pop()?.toLowerCase();
-  
+  const fileExtension = src.split(".").pop()?.toLowerCase();
+
   // Determine if we should use the original or fallback image
   const imageSrc = error && fallback ? fallback : src;
 
@@ -50,7 +50,7 @@ const OptimizedImage = ({
       // Add decoding async for better performance
       decoding="async"
       // Add proper aria attributes for accessibility
-      aria-hidden={alt === '' ? true : undefined}
+      aria-hidden={alt === "" ? true : undefined}
     />
   );
 };

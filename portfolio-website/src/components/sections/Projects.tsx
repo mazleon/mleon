@@ -29,16 +29,25 @@ const Projects = () => {
     {
       id: "ekyc-platform",
       title: "eKYC Biometric Onboarding Platform",
-      description: "Scale: 20M+ fintech users · Banks: Southeast Bank, Telecash · Regulatory: BFIU compliant",
+      description:
+        "Scale: 20M+ fintech users · Banks: Southeast Bank, Telecash · Regulatory: BFIU compliant",
       longDescription: `**Problem:** Manual KYC onboarding took 48 hours and required physical branch visits, creating 67% drop-off in digital banking sign-ups.\n\n**Approach:** Built a 5-stage AI pipeline: liveness detection → face extraction → NID/passport OCR (fine-tuned TrOCR) → ArcFace face matching → ML risk scoring ensemble. Async architecture on SQS handles ~385 submissions/hour peak.\n\n**Result:** Onboarding reduced from 48 hours to under 5 minutes. Auto-approval rate of 85%+ while maintaining BFIU regulatory compliance. System has served 20M+ users since deployment.`,
       category: ["ml", "software"],
-      technologies: ["PyTorch", "TrOCR", "InsightFace", "AWS SageMaker", "Docker", "MLflow"],
+      technologies: [
+        "PyTorch",
+        "TrOCR",
+        "InsightFace",
+        "AWS SageMaker",
+        "Docker",
+        "MLflow",
+      ],
       image: "/images/projects/face-recognition.png",
     },
     {
       id: "leaf-grading",
       title: "Digital Leaf Grading System",
-      description: "Scale: BAT Supply Chain · Accuracy: 95%+ · Impact: 3x Processing Speed",
+      description:
+        "Scale: BAT Supply Chain · Accuracy: 95%+ · Impact: 3x Processing Speed",
       longDescription: `**Problem:** Traditional manual inspection methods for tobacco leaves were time-consuming and subject to subjective human error, creating bottlenecks in the supply chain.\n\n**Approach:** Developed and deployed sophisticated computer vision algorithms and custom-trained CNN models to analyze images of tobacco leaves, classifying them into different quality grades based on color, texture, size, and defects. Integrated with MLflow for tracking.\n\n**Result:** Achieved a 95% accuracy rate while processing leaves 10x faster than human inspectors. Boosted overall grading consistency by 25%.`,
       category: ["ml", "research"],
       technologies: ["Python", "TensorFlow", "OpenCV", "AWS", "Docker"],
@@ -47,10 +56,18 @@ const Projects = () => {
     {
       id: "anomaly-detection",
       title: "Real-time Video Anomaly Detection",
-      description: "Scale: Production Edge Devices · Latency: <50ms · Hardware: NVIDIA Jetson",
+      description:
+        "Scale: Production Edge Devices · Latency: <50ms · Hardware: NVIDIA Jetson",
       longDescription: `**Problem:** Security systems generated too many false positives and lacked the latency required for real-time intervention at the edge.\n\n**Approach:** Designed and implemented a hybrid YOLO + ML model specifically optimized for NVIDIA Jetson edge devices using TensorRT and DeepStream.\n\n**Result:** Achieved <50ms inference latency at 30 FPS in production environments, significantly reducing false alarms while maintaining high detection rates.`,
       category: ["ml", "software"],
-      technologies: ["Python", "PyTorch", "TensorRT", "DeepStream", "Docker", "Edge AI"],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "TensorRT",
+        "DeepStream",
+        "Docker",
+        "Edge AI",
+      ],
       image: "/images/projects/anomaly-detection.png",
     },
     {
@@ -59,13 +76,21 @@ const Projects = () => {
       description: "Scale: 10K+ Daily Queries · Response Time: -60%",
       longDescription: `**Problem:** Customer support centers were overwhelmed with routine queries, leading to long wait times and poor user experience.\n\n**Approach:** Built and optimized multiple LLM-powered chatbot systems using LangChain, Google ADK, and vector databases (Chroma, Qdrant) for scalable RAG implementation.\n\n**Result:** Autonomously handled 10K+ daily queries and reduced customer support average response time by 60%.`,
       category: ["ml", "software"],
-      technologies: ["LangChain", "LLMs", "Qdrant", "Chroma", "Python", "Docker"],
+      technologies: [
+        "LangChain",
+        "LLMs",
+        "Qdrant",
+        "Chroma",
+        "Python",
+        "Docker",
+      ],
       image: "/images/projects/ai-chatbot.png",
     },
   ];
 
   const filteredProjects = projects.filter(
-    (project) => activeCategory === "all" || project.category.includes(activeCategory)
+    (project) =>
+      activeCategory === "all" || project.category.includes(activeCategory)
   );
 
   const categories = [
@@ -104,7 +129,11 @@ const Projects = () => {
         </MotionWrapper>
 
         {/* Projects Grid */}
-        <motion.div ref={ref} layout className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.div
+          ref={ref}
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <motion.div
@@ -115,7 +144,10 @@ const Projects = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
               >
-                <div className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30" onClick={() => setSelectedProject(project)}>
+                <div
+                  className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30"
+                  onClick={() => setSelectedProject(project)}
+                >
                   {/* Image */}
                   <div className="relative h-56 -mx-6 -mt-6 mb-6 overflow-hidden bg-surface-light">
                     <img
@@ -123,12 +155,17 @@ const Projects = () => {
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
-                      onError={(e) => { e.currentTarget.src = "/images/project-placeholder.png"; }}
+                      onError={(e) => {
+                        e.currentTarget.src = "/images/project-placeholder.png";
+                      }}
                     />
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
                       <button
-                        onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProject(project);
+                        }}
                         className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
                         aria-label="View project details"
                       >
@@ -165,12 +202,17 @@ const Projects = () => {
 
                   <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-light">
                     {project.technologies.slice(0, 4).map((tech) => (
-                      <span key={tech} className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full">
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full"
+                      >
                         {tech}
                       </span>
                     ))}
                     {project.technologies.length > 4 && (
-                      <span className="text-xs text-muted/50">+{project.technologies.length - 4}</span>
+                      <span className="text-xs text-muted/50">
+                        +{project.technologies.length - 4}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -182,9 +224,14 @@ const Projects = () => {
         {/* Project Modal */}
         <AnimatePresence>
           {selectedProject && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedProject(null)}>
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelectedProject(null)}
+            >
               <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 className="absolute inset-0 bg-primary/95 backdrop-blur-sm"
               />
               <motion.div
@@ -197,7 +244,11 @@ const Projects = () => {
                 {/* Modal Image */}
                 <div className="relative h-64 sm:h-72 w-full shrink-0 bg-surface-light">
                   <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                  <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover"
+                  />
                   <button
                     className="absolute top-4 right-4 z-20 p-2 rounded-full bg-primary/60 text-cream hover:bg-primary transition-colors cursor-pointer"
                     onClick={() => setSelectedProject(null)}
@@ -206,10 +257,15 @@ const Projects = () => {
                     <X size={18} />
                   </button>
                   <div className="absolute bottom-6 left-6 z-20">
-                    <h3 className="text-3xl font-heading font-bold text-cream mb-2">{selectedProject.title}</h3>
+                    <h3 className="text-3xl font-heading font-bold text-cream mb-2">
+                      {selectedProject.title}
+                    </h3>
                     <div className="flex gap-2">
                       {selectedProject.category.map((c) => (
-                        <span key={c} className="px-3 py-1 text-xs font-mono bg-accent text-white rounded-full uppercase">
+                        <span
+                          key={c}
+                          className="px-3 py-1 text-xs font-mono bg-accent text-white rounded-full uppercase"
+                        >
                           {c}
                         </span>
                       ))}
@@ -221,10 +277,25 @@ const Projects = () => {
                 <div className="p-8 overflow-y-auto">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-2">
-                      {selectedProject.longDescription ? selectedProject.longDescription.split('\n\n').map((paragraph, i) => (
-                        <p key={i} className="text-cream-dark font-body leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-cream font-bold">$1</strong>') }} />
-                      )) : (
-                        <p className="text-cream-dark font-body leading-relaxed">{selectedProject.description}</p>
+                      {selectedProject.longDescription ? (
+                        selectedProject.longDescription
+                          .split("\n\n")
+                          .map((paragraph, i) => (
+                            <p
+                              key={i}
+                              className="text-cream-dark font-body leading-relaxed mb-4"
+                              dangerouslySetInnerHTML={{
+                                __html: paragraph.replace(
+                                  /\*\*(.*?)\*\*/g,
+                                  '<strong class="text-cream font-bold">$1</strong>'
+                                ),
+                              }}
+                            />
+                          ))
+                      ) : (
+                        <p className="text-cream-dark font-body leading-relaxed">
+                          {selectedProject.description}
+                        </p>
                       )}
                     </div>
                     <div className="space-y-6">
@@ -232,7 +303,10 @@ const Projects = () => {
                         <p className="editorial-label">Tech Stack</p>
                         <div className="flex flex-wrap gap-2">
                           {selectedProject.technologies.map((tech) => (
-                            <span key={tech} className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full">
+                            <span
+                              key={tech}
+                              className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full"
+                            >
                               {tech}
                             </span>
                           ))}
@@ -240,13 +314,24 @@ const Projects = () => {
                       </div>
                       <div className="flex flex-col gap-3">
                         {selectedProject.githubLink && (
-                          <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer" className="btn-primary text-center text-sm cursor-pointer">
+                          <a
+                            href={selectedProject.githubLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary text-center text-sm cursor-pointer"
+                          >
                             <Github className="inline mr-2 h-4 w-4" /> View Code
                           </a>
                         )}
                         {selectedProject.liveLink && (
-                          <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer" className="btn-outline text-center text-sm cursor-pointer">
-                            <ExternalLink className="inline mr-2 h-4 w-4" /> Live Demo
+                          <a
+                            href={selectedProject.liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-outline text-center text-sm cursor-pointer"
+                          >
+                            <ExternalLink className="inline mr-2 h-4 w-4" />{" "}
+                            Live Demo
                           </a>
                         )}
                       </div>

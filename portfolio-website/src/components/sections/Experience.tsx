@@ -24,9 +24,21 @@ const Experience = () => {
         "Served 30M+ telecom users with secure biometric verification, achieving 50+ TPS on CPU with 99.2% accuracy.",
         "Reduced customer support response time by 60% and autonomously handled 10K+ daily queries via LLM-powered chatbots (LangChain, Qdrant).",
         "Boosted grading accuracy by 25% and reduced manual processing time by 3x through an automated CV pipeline tracked via MLflow.",
-        "Transitioned 3 out of 5+ Proof of Concept (PoC) AI projects into revenue-generating products."
+        "Transitioned 3 out of 5+ Proof of Concept (PoC) AI projects into revenue-generating products.",
       ],
-      technologies: ["Python", "PyTorch", "TensorRT", "Computer Vision", "LLM", "RAG", "LangChain", "FastAPI", "AWS SageMaker", "Docker", "MLflow"],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "TensorRT",
+        "Computer Vision",
+        "LLM",
+        "RAG",
+        "LangChain",
+        "FastAPI",
+        "AWS SageMaker",
+        "Docker",
+        "MLflow",
+      ],
     },
     {
       id: 2,
@@ -36,9 +48,16 @@ const Experience = () => {
       description: [
         "Enabled data-driven clinical decisions by building extraction and ETL pipelines from large SQL dumps.",
         "Supported medical diagnostic research through rigorous data preprocessing and exploratory analysis.",
-        "Co-authored peer-reviewed research papers on health data analytics and predictive modeling."
+        "Co-authored peer-reviewed research papers on health data analytics and predictive modeling.",
       ],
-      technologies: ["Python", "Scikit-learn", "Pandas", "SQL", "Visualization", "Statistics"],
+      technologies: [
+        "Python",
+        "Scikit-learn",
+        "Pandas",
+        "SQL",
+        "Visualization",
+        "Statistics",
+      ],
     },
   ];
 
@@ -54,7 +73,9 @@ const Experience = () => {
         <div className="max-w-4xl mx-auto space-y-0">
           {experiences.map((exp, index) => (
             <MotionWrapper key={exp.id} delay={index * 0.15}>
-              <div className={`relative pl-8 pb-16 ${index < experiences.length - 1 ? "border-l border-surface-light" : "border-l border-transparent"}`}>
+              <div
+                className={`relative pl-8 pb-16 ${index < experiences.length - 1 ? "border-l border-surface-light" : "border-l border-transparent"}`}
+              >
                 {/* Timeline dot */}
                 <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-accent -translate-x-[4.5px]" />
 
@@ -62,17 +83,27 @@ const Experience = () => {
                 <div className="mb-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Calendar size={14} className="text-muted" />
-                    <span className="text-xs font-mono text-muted tracking-wider uppercase">{exp.duration}</span>
+                    <span className="text-xs font-mono text-muted tracking-wider uppercase">
+                      {exp.duration}
+                    </span>
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-cream">{exp.title}</h3>
+                  <h3 className="text-2xl font-heading font-bold text-cream">
+                    {exp.title}
+                  </h3>
                   <p className="text-lg text-accent font-body">{exp.company}</p>
                 </div>
 
                 {/* Description */}
                 <ul className="space-y-3 mb-6">
                   {exp.description.map((point, idx) => (
-                    <li key={idx} className="flex items-start text-cream-dark text-sm leading-relaxed font-body">
-                      <ChevronRight className="mt-0.5 mr-2 flex-shrink-0 text-accent/60" size={14} />
+                    <li
+                      key={idx}
+                      className="flex items-start text-cream-dark text-sm leading-relaxed font-body"
+                    >
+                      <ChevronRight
+                        className="mt-0.5 mr-2 flex-shrink-0 text-accent/60"
+                        size={14}
+                      />
                       <span>{point}</span>
                     </li>
                   ))}

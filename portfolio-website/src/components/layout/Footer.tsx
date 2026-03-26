@@ -5,10 +5,26 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { name: "GitHub", url: "https://github.com/mazleon", icon: <Github size={16} /> },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", icon: <Linkedin size={16} /> },
-    { name: "Twitter", url: "https://x.com/LeonMazharul?lang=en", icon: <Twitter size={16} /> },
-    { name: "Scholar", url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en", icon: <SiGooglescholar size={16} /> },
+    {
+      name: "GitHub",
+      url: "https://github.com/mazleon",
+      icon: <Github size={16} />,
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
+      icon: <Linkedin size={16} />,
+    },
+    {
+      name: "Twitter",
+      url: "https://x.com/LeonMazharul?lang=en",
+      icon: <Twitter size={16} />,
+    },
+    {
+      name: "Scholar",
+      url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en",
+      icon: <SiGooglescholar size={16} />,
+    },
   ];
 
   return (

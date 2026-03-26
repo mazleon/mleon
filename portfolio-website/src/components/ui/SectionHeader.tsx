@@ -27,12 +27,12 @@ const SectionHeader = ({
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`mb-16 md:mb-20 ${centered ? "text-center" : ""}`}
     >
-      {label && (
-        <span className="editorial-label">{label}</span>
-      )}
+      {label && <span className="editorial-label">{label}</span>}
       <h2 className="text-cream mb-4">{title}</h2>
       {subtitle && (
-        <p className={`text-muted text-lg md:text-xl font-body max-w-2xl mt-4 leading-relaxed ${centered ? "mx-auto" : ""}`}>
+        <p
+          className={`text-muted text-lg md:text-xl font-body max-w-2xl mt-4 leading-relaxed ${centered ? "mx-auto" : ""}`}
+        >
           {subtitle}
         </p>
       )}

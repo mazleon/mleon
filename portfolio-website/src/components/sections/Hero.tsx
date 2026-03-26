@@ -5,10 +5,26 @@ import ImpactBar from "../ui/ImpactBar";
 
 const Hero: React.FC = () => {
   const socialLinks = [
-    { icon: <Github size={18} />, url: "https://github.com/mazleon", label: "GitHub" },
-    { icon: <Linkedin size={18} />, url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/", label: "LinkedIn" },
-    { icon: <Twitter size={18} />, url: "https://x.com/LeonMazharul?lang=en", label: "Twitter" },
-    { icon: <SiGooglescholar size={18} />, url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en", label: "Scholar" },
+    {
+      icon: <Github size={18} />,
+      url: "https://github.com/mazleon",
+      label: "GitHub",
+    },
+    {
+      icon: <Linkedin size={18} />,
+      url: "https://www.linkedin.com/in/mazharul-islam-leon-2b998b98/",
+      label: "LinkedIn",
+    },
+    {
+      icon: <Twitter size={18} />,
+      url: "https://x.com/LeonMazharul?lang=en",
+      label: "Twitter",
+    },
+    {
+      icon: <SiGooglescholar size={18} />,
+      url: "https://scholar.google.com/citations?user=UsoRY-QAAAAJ&hl=en",
+      label: "Scholar",
+    },
   ];
 
   return (
@@ -34,7 +50,11 @@ const Hero: React.FC = () => {
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="font-heading font-extrabold text-cream leading-[0.95] tracking-tighter mb-8"
               style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}
             >
@@ -50,10 +70,11 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-lg md:text-xl text-cream-dark font-body leading-relaxed max-w-xl mb-8"
             >
-              Bridging cutting-edge AI research with production-grade engineering.
-              From computer vision systems to agentic AI — building intelligent solutions that matter.
+              Bridging cutting-edge AI research with production-grade
+              engineering. From computer vision systems to agentic AI — building
+              intelligent solutions that matter.
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -61,7 +82,7 @@ const Hero: React.FC = () => {
             >
               <ImpactBar />
             </motion.div>
-            
+
             {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -70,7 +91,11 @@ const Hero: React.FC = () => {
               className="flex flex-wrap gap-4 mb-12"
             >
               <button
-                onClick={() => document.getElementById("publications")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() =>
+                  document
+                    .getElementById("publications")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
                 className="btn-primary"
               >
                 View Research
@@ -105,7 +130,9 @@ const Hero: React.FC = () => {
                 </a>
               ))}
               <span className="w-12 h-px bg-surface-light" />
-              <span className="text-xs font-mono text-muted tracking-wider uppercase">Available for partnerships</span>
+              <span className="text-xs font-mono text-muted tracking-wider uppercase">
+                Available for partnerships
+              </span>
             </motion.div>
           </div>
 
@@ -138,8 +165,12 @@ const Hero: React.FC = () => {
                 transition={{ delay: 1.2, duration: 0.5 }}
                 className="absolute -bottom-6 -right-6 lg:-left-12 lg:right-auto bg-surface border border-surface-light px-5 py-4 rounded-xl shadow-2xl backdrop-blur-md"
               >
-                <p className="text-[10px] font-mono text-accent uppercase tracking-widest mb-1">Impact</p>
-                <p className="text-sm font-heading font-black text-cream">5+ Years in ML</p>
+                <p className="text-[10px] font-mono text-accent uppercase tracking-widest mb-1">
+                  Impact
+                </p>
+                <p className="text-sm font-heading font-black text-cream">
+                  5+ Years in ML
+                </p>
               </motion.div>
             </div>
           </motion.div>

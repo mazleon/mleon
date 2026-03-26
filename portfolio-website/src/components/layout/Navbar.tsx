@@ -21,7 +21,10 @@ const Navbar = () => {
     { name: "Contact", href: "#contact" },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     const el = document.getElementById(href.replace("#", ""));
@@ -85,18 +88,24 @@ const Navbar = () => {
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             <div className="w-5 h-4 flex flex-col justify-between">
-              <span className={cn(
-                "w-full h-px bg-cream transition-all duration-300 origin-left",
-                mobileMenuOpen && "rotate-45 translate-y-px"
-              )} />
-              <span className={cn(
-                "w-full h-px bg-cream transition-all duration-300",
-                mobileMenuOpen && "opacity-0"
-              )} />
-              <span className={cn(
-                "w-full h-px bg-cream transition-all duration-300 origin-left",
-                mobileMenuOpen && "-rotate-45 -translate-y-px"
-              )} />
+              <span
+                className={cn(
+                  "w-full h-px bg-cream transition-all duration-300 origin-left",
+                  mobileMenuOpen && "rotate-45 translate-y-px"
+                )}
+              />
+              <span
+                className={cn(
+                  "w-full h-px bg-cream transition-all duration-300",
+                  mobileMenuOpen && "opacity-0"
+                )}
+              />
+              <span
+                className={cn(
+                  "w-full h-px bg-cream transition-all duration-300 origin-left",
+                  mobileMenuOpen && "-rotate-45 -translate-y-px"
+                )}
+              />
             </div>
           </button>
         </div>
