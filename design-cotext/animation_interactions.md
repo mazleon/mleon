@@ -1,228 +1,76 @@
 # Animation & Interaction Specifications
 
-This document outlines the animations and interactive elements that will be implemented in Mazharul Islam Leon's portfolio website.
+Implemented motion system. Stack: Framer Motion (UI choreography),
+react-three-fiber + three.js (hero scene), Tailwind keyframes (marquee,
+grain). One easing curve everywhere: `cubic-bezier(0.16, 1, 0.3, 1)`.
 
-## Page Load Animations
+## 1. Three.js Neural Field (hero)
 
-### Initial Page Load Sequence
-1. **Logo/Brand Animation**
-   - Subtle fade-in and scale (200ms)
-   - Timing: Immediate on load
+`src/components/three/NeuralField.tsx`, mounted via `HeroCanvas.tsx`.
 
-2. **Hero Content Reveal**
-   - Staggered fade-in for text elements
-   - Name: Fade-in + slide up (300ms)
-   - Title: Fade-in + slide up with 100ms delay
-   - Tagline: Fade-in + slide up with 200ms delay
-   - Buttons: Fade-in + slide up with 300ms delay
-   - Timing: After logo animation completes
+- 280 nodes in a flattened ellipsoid (seeded PRNG — identical every visit),
+  linked to ≤3 near neighbors; cream lines at 7% opacity, additive blending.
+- 18 pulse particles travel along random edges with smoothstep easing —
+  the "signals through a network" motif in brand orange.
+- Group drifts: slow Y rotation (0.04 rad/s), sinusoidal float, and
+  mouse-parallax tilt (lerped, ±0.12 rad).
+- **Loading**: `React.lazy` + Suspense — three.js lives in its own chunk
+  (~220 kB gzip) fetched after first paint; fallback is the plain dark hero.
+- **Guards**: skipped without WebGL; `frameloop="demand"` (static frame)
+  under `prefers-reduced-motion`; rAF auto-pauses in background tabs.
+- DPR clamped to [1, 2]; canvas is `pointer-events-none` + `aria-hidden`.
 
-3. **Navigation Items**
-   - Sequential fade-in from left to right
-   - Each item has 50ms delay from previous
-   - Duration: 250ms per item
-   - Timing: Simultaneous with hero animation
+## 2. Page-load sequence (hero)
 
-4. **Background Elements**
-   - Gradient or particle effect fade-in
-   - Duration: 800ms
-   - Easing: ease-out cubic
-   - Timing: Simultaneous with other animations
+1. Mono label fades up (0.3s delay)
+2. Name reveals word-by-word via SplitTextReveal masks (0.4s / 0.55s delays)
+3. Tagline, impact counters, CTAs, socials stagger in (0.6–0.9s delays)
+4. Photo scales in with floating badge (1.2s)
+5. Scroll cue appears last (1.6s) with a looping descent line
 
-### Section Load Animations (Scroll-Triggered)
+## 3. Scroll-driven motion
 
-For each main section as it enters viewport:
+- **ScrollProgress** — 2px accent gradient hairline fixed to viewport top,
+  spring-smoothed `scaleX` of page progress.
+- **SplitTextReveal** — word-masked reveals on every H1/H2; observes its
+  container (not the clipped words) with `useInView`, fires once at 50%
+  visibility.
+- **SectionHeader** — accent rule scales in from the left, label fades,
+  title splits, subtitle slides up (0.25s delay).
+- **Impact counters** — spring-eased count-up (1.8s) on first view.
+- **Section content** — existing MotionWrapper fade/slide stagger retained.
 
-1. **Section Heading**
-   - Fade-in + slide up from bottom (20px)
-   - Duration: 500ms
-   - Trigger: When section is 20% in viewport
+## 4. Cursor-driven interactions (fine pointers only)
 
-2. **Section Content**
-   - Staggered reveal of child elements
-   - Base animation: Fade-in + translate Y (15px)
-   - Delay: 75ms between elements
-   - Duration: 650ms per element
-   - Trigger: When parent section is 15% in viewport
+- **CustomCursor** — 8px accent dot (instant) + 32px ring (spring-trailed,
+  `mix-blend-difference`). Ring grows to 52px with accent border over
+  interactive elements. Native cursor suppressed via `.custom-cursor` class
+  on `<html>`; never mounted on touch or reduced-motion devices.
+- **MagneticButton** — hero CTAs gravitate toward the cursor
+  (strength 0.3, stiffness 200 spring), snap back on leave.
+- **TiltCard** — project cards tilt up to ±7° in perspective 1200px with a
+  cursor-tracking radial glare (cream at 7%).
+- **Neural field parallax** — scene tilts subtly toward the cursor.
 
-3. **Section Dividers**
-   - Scale/width expansion animation
-   - Duration: 600ms
-   - Easing: cubic-bezier(0.16, 1, 0.3, 1)
-   - Trigger: When divider is 90% in viewport
+## 5. Ambient loops
 
-## Scroll-Based Animations
+- **Marquee** — capability ticker between hero and about; content duplicated
+  for a seamless `translateX(-50%)` loop (36s linear), pauses on hover,
+  disabled under `motion-reduce`.
+- **Pulse particles** — continuous in the hero field.
+- **Grain** — static 3% noise overlay (no animation cost).
 
-### Parallax Effects
-- **Background Elements**: Subtle movement at 0.1-0.3 scroll speed ratio
-- **Decorative Graphics**: Movement at different rates based on visual layers
-- **Hero Section Image**: Slight scale and position adjustment on scroll
+## 6. Micro-interactions (retained)
 
-### Progress Indicators
-1. **Scroll Progress Bar**
-   - Linear progress indicator at top of viewport
-   - Fill animation synchronized with page scroll percentage
-   - Color gradient animation as progress increases
+- Buttons: color/shadow transitions, accent glow on primary hover
+- Cards: border lightens, image scales 1.05 on hover
+- Photo: 20% grayscale → full color on hover (0.7s)
+- Navbar links, social icons: 200ms color transitions
 
-2. **Section Navigation Indicators**
-   - Active section dot enlarges and changes color
-   - Duration: 300ms
-   - Easing: ease-out
+## Accessibility & performance rules
 
-### Timeline Animation (Experience Section)
-- Timeline line draws/extends as user scrolls
-- Experience cards fade and slide in sequentially
-- Duration: Synchronized with scroll speed
-- Trigger: When timeline container enters viewport
-
-## Hover Interactions
-
-### Navigation Links
-- **Hover State**: Text color transition to accent color
-- **Duration**: 200ms
-- **Additional Effect**: Subtle underline animation or scale
-
-### Buttons
-1. **Primary Buttons**
-   - Scale: 1.05x
-   - Box-shadow increase
-   - Background color slight lightening
-   - Duration: 250ms
-   - Easing: ease-out
-
-2. **Secondary Buttons**
-   - Background opacity increase
-   - Scale: 1.03x
-   - Duration: 200ms
-   - Easing: ease
-
-### Project Cards
-- **Enter Hover**: 
-  - translateY(-8px) 
-  - Box-shadow increase
-  - Duration: 300ms
-  - Easing: cubic-bezier(0.2, 0, 0, 1)
-
-- **Project Image Overlay**:
-  - Gradient overlay appears
-  - Project links fade in
-  - Scale: 1.03x
-  - Duration: 350ms
-
-### Skill Cards
-- **Enter Hover**:
-  - Subtle glow effect (box-shadow)
-  - Scale: 1.02x
-  - Icon color shift to accent color
-  - Duration: 250ms
-
-### Social Media Icons
-- **Enter Hover**:
-  - Scale: 1.2x
-  - Color shift to accent color
-  - Optional: Slight rotation or bounce
-  - Duration: 200ms
-  - Easing: spring(mass: 1, stiffness: 100, damping: 10)
-
-## Click/Tap Interactions
-
-### Button Press Effect
-- **On Press**: 
-  - Scale: 0.97x
-  - Duration: 100ms
-  - Easing: ease-in
-
-- **Release**:
-  - Return to normal or hover state
-  - Duration: 200ms
-  - Easing: ease-out
-
-### Navigation Menu (Mobile)
-- **Open Animation**:
-  - Slide in from right
-  - Backdrop fade-in
-  - Duration: 350ms
-  - Easing: cubic-bezier(0.16, 1, 0.3, 1)
-
-- **Close Animation**:
-  - Slide out to right
-  - Backdrop fade-out
-  - Duration: 250ms
-  - Easing: ease-in-out
-
-### Form Interactions
-1. **Input Fields**:
-   - **Focus**: Border color transition + subtle glow
-   - **Valid**: Subtle green indicator appears
-   - **Invalid**: Subtle red indicator and error message appears
-   - Duration: 200ms
-
-2. **Submit Button**:
-   - **Loading State**: Spinner animation
-   - **Success**: Checkmark animation + color change
-   - **Error**: Shake animation + color change
-   - Duration: Varies based on state
-
-## Special Interactive Features
-
-### Typing Animation (Hero Tagline)
-- Text types out with cursor blink effect
-- Speed: 50-70ms per character
-- Cursor: Blinking animation (opacity 0-1)
-- Timing: After initial load animations complete
-
-### Dark/Light Mode Toggle
-- Smooth color transition for all elements
-- Icon morphing animation (sun to moon)
-- Duration: 400ms for color transitions
-- Easing: ease-in-out
-
-### Skills Visualization
-1. **Progress Bars**:
-   - Fill animation from 0% to final percentage
-   - Duration: 1000ms
-   - Easing: cubic-bezier(0.25, 1, 0.5, 1)
-   - Delay: Staggered, 100ms between items
-
-2. **Chart Animations**:
-   - Growing/drawing effect for data visualization
-   - Duration: 1200ms
-   - Easing: ease-out
-   - Optional: Data point emphasis on hover
-
-### Project Filters
-- Smooth shuffle/transition between filtered items
-- Fade-out of non-matching items
-- Fade-in and position adjustment of matching items
-- Duration: 500ms
-- Easing: ease-in-out
-
-## Performance Considerations
-
-### Animation Optimization
-- Use CSS transforms and opacity for smooth performance
-- Implement `will-change` property selectively for complex animations
-- Reduce or simplify animations on low-power devices
-- Use `requestAnimationFrame` for JavaScript animations
-
-### Responsive Adjustments
-- Simplified animations for mobile devices
-- Reduced motion option for accessibility
-- Media query based animation complexity
-
-### Progressive Enhancement
-- Core functionality works without animations
-- Animation logic separated from core functionality
-- Fallbacks for browsers with limited support
-
-## Motion Design Principles
-
-Throughout the site, animations will follow these guiding principles:
-
-1. **Purposeful**: Animations serve a functional purpose (guiding attention, providing feedback)
-2. **Subtle**: Animations enhance rather than distract from content
-3. **Consistent**: Similar elements animate in similar ways
-4. **Efficient**: Animations are optimized for performance
-5. **Accessible**: Animations respect user preferences including reduced motion settings
-
-These animation and interaction specifications will create an engaging, responsive experience that highlights Mazharul Islam Leon's professional identity while maintaining a polished, sophisticated aesthetic.
+- `prefers-reduced-motion: reduce` collapses all animation to ≤0.01ms
+  globally (`globals.css`), plus explicit component guards listed above.
+- All decorative layers: `aria-hidden="true"` + `pointer-events-none`.
+- Transforms and opacity only — no layout-thrashing properties animated.
+- Three.js never blocks first paint (lazy chunk, Suspense fallback `null`).

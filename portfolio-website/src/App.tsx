@@ -12,6 +12,9 @@ import Contact from "./components/sections/Contact";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import ParticleBackground from "./components/sections/ParticleBackground";
 import ChatWidget from "./components/chatbot/ChatWidget";
+import ScrollProgress from "./components/ui/ScrollProgress";
+import CustomCursor from "./components/ui/CustomCursor";
+import Marquee from "./components/ui/Marquee";
 
 import SEO from "./components/common/SEO";
 
@@ -19,8 +22,11 @@ function App() {
   return (
     <Layout>
       <SEO />
+      <ScrollProgress />
+      <CustomCursor />
       <ParticleBackground />
       <Hero />
+      <Marquee />
       <About />
       <Experience />
       <Publications />

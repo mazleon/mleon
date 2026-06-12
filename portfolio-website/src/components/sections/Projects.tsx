@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import SectionHeader from "../ui/SectionHeader";
 import { Github, ExternalLink, Eye, X } from "lucide-react";
 import MotionWrapper from "@/components/common/MotionWrapper";
+import TiltCard from "../ui/TiltCard";
 
 type ProjectCategory = "all" | "ml" | "software" | "research";
 
@@ -144,6 +145,7 @@ const Projects = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
               >
+                <TiltCard>
                 <div
                   className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30"
                   onClick={() => setSelectedProject(project)}
@@ -216,6 +218,7 @@ const Projects = () => {
                     )}
                   </div>
                 </div>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>
