@@ -29,11 +29,12 @@ My deep technical arsenal is structured into a 3-tier architecture:
 
 ## Architecture
 
-This portfolio is engineered with a modern, high-performance frontend stack focusing on bespoke editorial aesthetics, geometric typography, and smooth framer motion transitions:
+This portfolio is engineered with a modern, high-performance frontend stack focusing on bespoke editorial aesthetics, geometric typography, and an immersive 3D motion layer:
 
 - **Core:** React, TypeScript, Vite
-- **Styling:** Tailwind CSS (Strict custom tokens, glassmorphism disabled in favor of flat editorial design)
-- **Animation:** Framer Motion (Scroll triggers, variants, orchestrations)
+- **3D:** Three.js via react-three-fiber — a lazy-loaded neural constellation behind the hero (synaptic pulse particles, mouse parallax), with WebGL and `prefers-reduced-motion` fallbacks
+- **Styling:** Tailwind CSS (Strict custom tokens, flat editorial design)
+- **Animation:** Framer Motion (word-masked text reveals, magnetic CTAs, 3D tilt cards, scroll progress, spring counters, custom cursor)
 - **Tooling/CI:** GitHub Actions (Automated type-checking and build generation)
 - **Deployment:** Netlify 
 

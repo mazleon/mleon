@@ -1,69 +1,42 @@
-# Color Palette for Mazharul Islam Leon's Portfolio
+# Color Palette
 
-After reviewing numerous professional portfolio websites for software engineers and ML specialists, I've selected the following color palette that combines professionalism with modern tech aesthetics.
+Single-accent dark editorial palette. Defined in `tailwind.config.js`.
 
-## Primary Color Palette
+## Core tokens
 
-### Deep Tech Professional
+| Token | Hex | Usage |
+| --- | --- | --- |
+| `primary` | `#0A0A0B` | Page background (near-black) |
+| `surface` | `#111113` | Cards, navbar, modals |
+| `surface-light` | `#1E1E22` | Borders, dividers, scrollbar |
+| `cream` | `#F5F0EB` | Headings, primary text |
+| `cream-dark` | `#C8C2BA` | Body copy |
+| `muted` | `#6B6B70` | Labels, captions, placeholders |
+| `accent` | `#E8553A` | Signal orange — CTAs, links, highlights |
+| `accent-light` | `#F07A63` | Accent hover / gradient end |
 
-This palette combines deep, professional dark tones with vibrant accents that highlight important elements while maintaining readability and sophistication.
+## Status colors
 
-| Color Role | Hex Code | RGB | Description |
-|------------|----------|-----|-------------|
-| Primary Background | `#0F172A` | rgb(15, 23, 42) | Deep navy blue |
-| Secondary Background | `#1E293B` | rgb(30, 41, 59) | Slightly lighter navy |
-| Primary Text | `#F8FAFC` | rgb(248, 250, 252) | Off-white |
-| Secondary Text | `#94A3B8` | rgb(148, 163, 184) | Light slate gray |
-| Primary Accent | `#6049EA` | rgb(96, 73, 234) | Vibrant purple |
-| Secondary Accent | `#22D3EE` | rgb(34, 211, 238) | Bright cyan |
+| Token | Hex |
+| --- | --- |
+| `success` | `#2ECC71` |
+| `error` | `#E74C3C` |
+| `warning` | `#F39C12` |
 
-## Color Application Guide
+## Three.js scene colors
 
-### Text Elements
-- Headings: `#F8FAFC` (Off-white)
-- Body text: `#94A3B8` (Light slate gray)
-- Links: `#6049EA` (Vibrant purple)
-- Link hover: `#22D3EE` (Bright cyan)
+The neural field reuses the brand tokens (`NeuralField.tsx`):
 
-### UI Elements
-- Primary buttons: `#6049EA` (Vibrant purple)
-- Secondary buttons: `#1E293B` (Slightly lighter navy) with `#94A3B8` border
-- Form inputs: `#1E293B` (Slightly lighter navy) with `#94A3B8` border
-- Navigation: `#0F172A` (Deep navy blue) with `#F8FAFC` text
-- Cards/containers: `#1E293B` (Slightly lighter navy)
+- Nodes: ~14% accent orange, the rest cream and muted gray
+- Connection lines: cream at 7% opacity, additive blending
+- Pulse particles: accent orange, additive glow sprite
 
-### Accents and Highlights
-- Important information: `#22D3EE` (Bright cyan)
-- Success messages: `#10B981` (Green)
-- Error messages: `#EF4444` (Red)
-- Warning messages: `#F59E0B` (Amber)
+## Rules
 
-## Light Mode Alternative
-
-For users who prefer light mode:
-
-| Color Role | Hex Code | RGB | Description |
-|------------|----------|-----|-------------|
-| Primary Background | `#F8FAFC` | rgb(248, 250, 252) | Off-white |
-| Secondary Background | `#E2E8F0` | rgb(226, 232, 240) | Light gray |
-| Primary Text | `#0F172A` | rgb(15, 23, 42) | Deep navy blue |
-| Secondary Text | `#334155` | rgb(51, 65, 85) | Dark slate gray |
-| Primary Accent | `#6049EA` | rgb(96, 73, 234) | Vibrant purple |
-| Secondary Accent | `#0891B2` | rgb(8, 145, 178) | Darker cyan |
-
-## Accessibility Considerations
-
-- All text colors have been checked for contrast ratios against their background colors to ensure WCAG 2.1 AA compliance
-- Color is not used as the only means of conveying information
-- Interactive elements have distinct hover/focus states
-
-## Color Psychology
-
-The chosen palette leverages color psychology effectively for a technology professional:
-
-- Deep blues evoke trust, reliability, and professionalism
-- Purple accents suggest creativity and innovation
-- Cyan highlights convey technical precision and forward-thinking
-- The overall dark scheme projects sophistication and modern tech aesthetics
-
-This color palette will create a visually cohesive, professional portfolio that effectively highlights Mazharul Islam Leon's skills and projects while providing an engaging user experience.
+1. Orange is rationed. It marks interaction and emphasis — never large fills
+   beyond buttons.
+2. Text on `primary`/`surface` is always cream-family; muted gray is for
+   metadata only, not body copy.
+3. Selection color: accent at 30% opacity (`globals.css`).
+4. No second hue. Depth comes from the 3D layer, grain, and borders — not
+   from additional colors.
