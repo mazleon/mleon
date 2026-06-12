@@ -107,6 +107,13 @@
   }
 }
 
+/* Custom cursor — native cursor suppressed only while the React cursor
+   is mounted (fine pointer + no reduced-motion) */
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

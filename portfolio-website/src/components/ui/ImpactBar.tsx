@@ -1,42 +1,40 @@
-import { useRef, useState, useEffect } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 
-const counters = [
+interface CounterSpec {
+  value: number;
+  suffix: string;
+  label: string;
+  prefix: string;
+}
+
+const counters: CounterSpec[] = [
   { value: 50, suffix: "M+", label: "Users in Production", prefix: "" },
   { value: 6, suffix: "", label: "IEEE / Springer Publications", prefix: "" },
   { value: 50, suffix: "ms", label: "Edge Inference Latency", prefix: "<" },
-  {
-    value: 5,
-    suffix: "+",
-    label: "Years Production ML",
-    prefix: "",
-    isFloat: false,
-  },
+  { value: 5, suffix: "+", label: "Years Production ML", prefix: "" },
 ];
 
-const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
+const Counter = ({ value, prefix, suffix, label }: CounterSpec) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10px" });
-  const [count, setCount] = useState(0);
+  const count = useMotionValue(0);
+  const display = useTransform(count, (v) => Math.round(v).toString());
 
   useEffect(() => {
-    if (isInView) {
-      let start = 0;
-      const duration = 1500;
-      const increment = value / (duration / 16);
-
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= value) {
-          setCount(value);
-          clearInterval(timer);
-        } else {
-          setCount(start);
-        }
-      }, 16);
-      return () => clearInterval(timer);
-    }
-  }, [isInView, value]);
+    if (!isInView) return;
+    const controls = animate(count, value, {
+      duration: 1.8,
+      ease: [0.16, 1, 0.3, 1],
+    });
+    return controls.stop;
+  }, [isInView, count, value]);
 
   return (
     <div
@@ -45,7 +43,7 @@ const Counter = ({ value, prefix, suffix, label, isFloat = false }: any) => {
     >
       <div className="font-heading font-black text-3xl md:text-4xl text-cream tracking-tight">
         {prefix}
-        {isFloat ? count.toFixed(1) : Math.floor(count)}
+        <motion.span>{display}</motion.span>
         {suffix}
       </div>
       <div className="text-[10px] md:text-xs font-mono text-muted uppercase tracking-widest">

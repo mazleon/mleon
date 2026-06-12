@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { SiGooglescholar } from "react-icons/si";
 import ImpactBar from "../ui/ImpactBar";
+import HeroCanvas from "../three/HeroCanvas";
+import SplitTextReveal from "../ui/SplitTextReveal";
+import MagneticButton from "../ui/MagneticButton";
 
 const Hero: React.FC = () => {
   const socialLinks = [
@@ -32,6 +35,7 @@ const Hero: React.FC = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-primary pt-24 pb-12 lg:pt-28 lg:pb-16"
     >
+      <HeroCanvas />
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center min-h-screen">
           {/* Text — takes 8 cols on large screens, ensuring no overlap */}
@@ -46,22 +50,19 @@ const Hero: React.FC = () => {
               Senior AI/ML Engineer & Researcher
             </motion.p>
 
-            {/* Name — Editorial oversized */}
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.4,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+            {/* Name — Editorial oversized, word-masked reveal */}
+            <h1
               className="font-heading font-extrabold text-cream leading-[0.95] tracking-tighter mb-8"
-              style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}
+              style={{ fontSize: "clamp(2.75rem, 9vw, 7rem)" }}
             >
-              Mazharul
+              <SplitTextReveal text="Mazharul" delay={0.4} />
               <br />
-              Islam <span className="text-accent">Leon</span>
-            </motion.h1>
+              <SplitTextReveal
+                text="Islam Leon"
+                accentWords={["Leon"]}
+                delay={0.55}
+              />
+            </h1>
 
             {/* Tagline */}
             <motion.p
@@ -90,24 +91,28 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-wrap gap-4 mb-12"
             >
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("publications")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="btn-primary"
-              >
-                View Research
-              </button>
-              <a
-                href="/AI_Resume_Mazharul_Islam_.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline inline-flex items-center justify-center"
-              >
-                Download Resume
-              </a>
+              <MagneticButton>
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("publications")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="btn-primary"
+                >
+                  View Research
+                </button>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="/AI_Resume_Mazharul_Islam_.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline inline-flex items-center justify-center"
+                >
+                  Download Resume
+                </a>
+              </MagneticButton>
             </motion.div>
 
             {/* Social Links */}
@@ -176,6 +181,30 @@ const Hero: React.FC = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-3"
+        aria-hidden="true"
+      >
+        <span className="text-[10px] font-mono text-muted uppercase tracking-[0.3em]">
+          Scroll
+        </span>
+        <span className="relative block w-px h-12 bg-surface-light overflow-hidden">
+          <motion.span
+            className="absolute left-0 top-0 w-px h-4 bg-accent"
+            animate={{ y: [-16, 48] }}
+            transition={{
+              duration: 1.6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </span>
+      </motion.div>
     </section>
   );
 };
