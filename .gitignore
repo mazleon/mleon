@@ -67,3 +67,5 @@ Screentsjpts/
 Screemtsjpts/
 references/
 refs/
+# Agent context files
+.agents

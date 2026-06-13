@@ -14,10 +14,35 @@ interface ExperienceItem {
 const Experience = () => {
   const experiences: ExperienceItem[] = [
     {
+      id: 0,
+      title: "Senior AI Engineer",
+      company: "Agripulse.ai",
+      duration: "2025 — Present",
+      description: [
+        "Architecting multi-modal AI pipelines for precision agriculture — integrating satellite imagery, IoT sensor streams, and LLM-based advisory systems.",
+        "Built computer vision models for real-time crop disease detection and yield prediction, deployed at scale across farm networks.",
+        "Designed RAG-powered agronomic knowledge bases enabling farmers to query field-specific recommendations via natural language.",
+        "Leading LLM fine-tuning workflows (QLoRA) on domain-specific agricultural datasets to improve recommendation precision.",
+        "Collaborating cross-functionally with product and data teams to drive AI features from proof-of-concept to production.",
+      ],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "Computer Vision",
+        "LLMs",
+        "RAG",
+        "LangChain",
+        "QLoRA",
+        "FastAPI",
+        "Docker",
+        "AWS",
+      ],
+    },
+    {
       id: 1,
       title: "Senior Software Engineer",
       company: "RedDot Digital Limited",
-      duration: "Aug 2021 — Present",
+      duration: "Aug 2021 — 2024",
       description: [
         "Reduced onboarding from 48 hours to under 5 minutes for 20M+ fintech users by designing an OCR + face matching eKYC platform.",
         "Achieved <50ms inference latency at 30 FPS on NVIDIA Jetson edge devices by optimizing a hybrid YOLO + ML anomaly detection model.",
