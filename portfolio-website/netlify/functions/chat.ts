@@ -83,36 +83,68 @@ const handler: Handler = async (event: HandlerEvent) => {
     try {
         const { message, history } = JSON.parse(event.body || "{}");
 
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://mazleon.com",
-                "X-Title": "Leon Portfolio Chatbot",
-            },
-            body: JSON.stringify({
-                model: "z-ai/glm-4.5-air",
-                messages: [
-                    { role: "system", content: generateSystemPrompt() },
-                    ...history,
-                    { role: "user", content: message },
-                ],
-                max_tokens: 200,
-                temperature: 0.7,
-            }),
-        });
+        const models = ["z-ai/glm-4.5-air", "openai/gpt-4o-mini"];
+        let lastError: string | null = null;
+        let data: any = null;
 
-        const data: any = await response.json();
+        for (const model of models) {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${apiKey}`,
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://mazleon.com",
+                    "X-Title": "Leon Portfolio Chatbot",
+                },
+                body: JSON.stringify({
+                    model,
+                    messages: [
+                        { role: "system", content: generateSystemPrompt() },
+                        ...history,
+                        { role: "user", content: message },
+                    ],
+                    max_tokens: 200,
+                    temperature: 0.7,
+                }),
+            });
+
+            const raw = await response.text();
+            console.log(`[chat] model=${model} status=${response.status} body=${raw.slice(0, 300)}`);
+
+            try {
+                data = JSON.parse(raw);
+            } catch {
+                data = null;
+            }
+
+            if (!response.ok || data?.error) {
+                lastError = data?.error?.message || `Upstream ${response.status}`;
+                continue;
+            }
+
+            const content = data.choices?.[0]?.message?.content;
+            if (content) {
+                return {
+                    statusCode: 200,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ content }),
+                };
+            }
+
+            lastError = "Empty response from model";
+        }
+
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                content: data.choices?.[0]?.message?.content || "I couldn't generate a response.",
+                content: lastError
+                    ? `I couldn't generate a response (${lastError}). Please try again later.`
+                    : "I couldn't generate a response.",
             }),
         };
     } catch (error) {
-        console.error("Chat function error:", error);
+        console.error("[chat] error:", error);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: "Internal Server Error" }),
