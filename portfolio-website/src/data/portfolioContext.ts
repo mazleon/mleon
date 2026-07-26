@@ -4,10 +4,10 @@
 export const PORTFOLIO_CONTEXT = {
   personal: {
     name: "Mazharul Islam Leon",
-    title: "Senior Software Engineer",
-    company: "RedDot Digital Limited",
+    title: "Senior AI/ML Engineer",
+    company: "Brain Station 23",
     location: "Bangladesh",
-    yearsExperience: "5+",
+    yearsExperience: "6+",
     specialization: "Machine Learning & AI",
     email: "mzleon.cse@gmail.com",
     social: {
@@ -26,9 +26,17 @@ he specializes in bridging the gap between cutting-edge research and production-
 
   experience: [
     {
+      title: "Senior AI/ML Engineer",
+      company: "Brain Station 23",
+      duration: "Aug 2026 - Present",
+      responsibilities: [
+        "Building agentic multi-hop orchestration-based chatbot development, leveraging LLM orchestration frameworks for complex reasoning and tool-augmented workflows",
+      ],
+    },
+    {
       title: "Senior Software Engineer",
       company: "RedDot Digital Limited",
-      duration: "Aug 2021 - Present",
+      duration: "Aug 2021 - Jul 2026",
       responsibilities: [
         "Architected an Agent-Based AI Chatbot using advanced NLP and orchestration patterns (LangChain, CrewAI)",
         "Designed the Digital Leaf Grading System for BAT, leveraging custom Computer Vision models for 95%+ accuracy",

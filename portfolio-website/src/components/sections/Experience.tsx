@@ -15,9 +15,27 @@ const Experience = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 0,
+      title: "Senior AI/ML Engineer",
+      company: "Brain Station 23",
+      duration: "Aug 2026 — Present",
+      description: [
+        "Building agentic multi-hop orchestration-based chatbots, leveraging LLM orchestration frameworks for complex reasoning and tool-augmented workflows.",
+      ],
+      technologies: [
+        "Python",
+        "LLMs",
+        "Agentic AI",
+        "LangChain",
+        "Multi-hop Orchestration",
+        "FastAPI",
+        "Docker",
+      ],
+    },
+    {
+      id: 1,
       title: "Senior AI Engineer",
       company: "Agripulse.ai",
-      duration: "2025 — Present",
+      duration: "2025 — Jun 2026",
       description: [
         "Architecting multi-modal AI pipelines for precision agriculture — integrating satellite imagery, IoT sensor streams, and LLM-based advisory systems.",
         "Built computer vision models for real-time crop disease detection and yield prediction, deployed at scale across farm networks.",
@@ -39,7 +57,7 @@ const Experience = () => {
       ],
     },
     {
-      id: 1,
+      id: 2,
       title: "Senior Software Engineer",
       company: "RedDot Digital Limited",
       duration: "Aug 2021 — 2024",
@@ -66,7 +84,7 @@ const Experience = () => {
       ],
     },
     {
-      id: 2,
+      id: 3,
       title: "Jr. Data Science Engineer",
       company: "CMED Health Limited",
       duration: "Sep 2020 — July 2021",
