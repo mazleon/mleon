@@ -2,30 +2,37 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import SectionHeader from "../ui/SectionHeader";
 import { Clock, ArrowRight } from "lucide-react";
+import SectionHeader from "../ui/SectionHeader";
+import SEO from "../common/SEO";
 import { blogPosts } from "@/data/blogPosts";
 
 type BlogCategory = "all" | "nlp" | "genai" | "frameworks" | "tutorials";
 
-const Blog = () => {
+const categories = [
+  { id: "all", label: "All" },
+  { id: "nlp", label: "NLP" },
+  { id: "genai", label: "Gen AI" },
+  { id: "frameworks", label: "Frameworks" },
+  { id: "tutorials", label: "Tutorials" },
+];
+
+const BlogListPage = () => {
   const [activeCategory, setActiveCategory] = useState<BlogCategory>("all");
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const filteredBlogPosts = blogPosts.filter(
-    (post) => activeCategory === "all" || post.category.includes(activeCategory)
+    (post) =>
+      activeCategory === "all" || post.category.includes(activeCategory)
   );
 
-  const categories = [
-    { id: "all", label: "All" },
-    { id: "nlp", label: "NLP" },
-    { id: "genai", label: "Gen AI" },
-    { id: "frameworks", label: "Frameworks" },
-    { id: "tutorials", label: "Tutorials" },
-  ];
-
   return (
-    <section id="blog" className="section bg-surface relative">
+    <section className="section bg-surface relative">
+      <SEO
+        title="Blog | Insights"
+        description="Sharing knowledge on AI, machine learning, and software engineering"
+        url="https://mazleon.com/blog"
+      />
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <SectionHeader
           label="06 — Blog"
@@ -33,7 +40,6 @@ const Blog = () => {
           subtitle="Sharing knowledge on AI, machine learning, and software engineering"
         />
 
-        {/* Category Filter */}
         <div className="flex justify-center mb-12">
           <div className="flex flex-wrap gap-2 p-1 bg-primary rounded-full border border-surface-light">
             {categories.map((cat) => (
@@ -52,7 +58,6 @@ const Blog = () => {
           </div>
         </div>
 
-        {/* Blog Grid */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
@@ -71,7 +76,6 @@ const Blog = () => {
               >
                 <Link to={`/blog/${post.slug}`} className="block h-full">
                   <div className="editorial-card group h-full overflow-hidden hover:border-accent/20 cursor-pointer">
-                    {/* Image */}
                     <div className="relative h-48 -mx-6 -mt-6 mb-5 overflow-hidden bg-surface-light">
                       <img
                         src={post.image}
@@ -84,7 +88,6 @@ const Blog = () => {
                       />
                     </div>
 
-                    {/* Meta */}
                     <div className="flex items-center gap-3 mb-3 text-xs text-muted">
                       <span className="font-mono">{post.publishDate}</span>
                       <span className="w-1 h-1 rounded-full bg-muted/50" />
@@ -94,7 +97,6 @@ const Blog = () => {
                       </span>
                     </div>
 
-                    {/* Title */}
                     <h3 className="text-lg font-heading font-bold text-cream group-hover:text-accent transition-colors mb-3 line-clamp-2">
                       {post.title}
                     </h3>
@@ -103,7 +105,6 @@ const Blog = () => {
                       {post.description}
                     </p>
 
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {post.tags.slice(0, 3).map((tag) => (
                         <span
@@ -115,7 +116,6 @@ const Blog = () => {
                       ))}
                     </div>
 
-                    {/* Read more */}
                     <span className="inline-flex items-center gap-1 text-sm font-body text-accent hover:underline cursor-pointer">
                       Read article <ArrowRight size={14} />
                     </span>
@@ -130,4 +130,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default BlogListPage;
