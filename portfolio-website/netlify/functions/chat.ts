@@ -92,7 +92,7 @@ const handler: Handler = async (event: HandlerEvent) => {
                 "X-Title": "Leon Portfolio Chatbot",
             },
             body: JSON.stringify({
-                model: "z-ai/glm-4.5-air:free",
+                model: "z-ai/glm-4.5-air",
                 messages: [
                     { role: "system", content: generateSystemPrompt() },
                     ...history,
