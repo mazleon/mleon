@@ -5,6 +5,7 @@ import SectionHeader from "../ui/SectionHeader";
 import { Github, ExternalLink, Eye, X } from "lucide-react";
 import MotionWrapper from "@/components/common/MotionWrapper";
 import TiltCard from "../ui/TiltCard";
+import ProjectCarousel, { Slide } from "../ui/ProjectCarousel";
 
 type ProjectCategory = "all" | "ml" | "software" | "research";
 
@@ -16,6 +17,8 @@ interface Project {
   category: ProjectCategory[];
   technologies: string[];
   image: string;
+  /** Extra screenshots — when present the modal shows a carousel. */
+  gallery?: Slide[];
   githubLink?: string;
   liveLink?: string;
 }
@@ -27,6 +30,48 @@ const Projects = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const projects: Project[] = [
+    {
+      id: "unitrack",
+      title: "UniTrack — Graduate Application Tracker",
+      description:
+        "Live product · Professor outreach + job pipeline in one board · AI writing and CV↔JD analysis · Bring-your-own-key",
+      longDescription: `**Problem:** Applying to graduate programmes and industry roles at the same time means running two pipelines out of one inbox. Professor outreach lives in spreadsheets, job applications live in a second tracker, and the artefacts that decide the outcome — the cover letter, the follow-up email, the CV tuned to a specific JD — get rewritten from scratch every time. Nothing knows about anything else, so deadlines slip and follow-ups are missed.\n\n**Approach:** Built UniTrack as a single workspace over both pipelines. Professors are tracked as an outreach CRM — expertise, lab, latest paper, and a status ladder from shortlisted through reading papers, drafting, emailed, replied. Job applications carry company, location, compensation, work type, deadline, and their own applied → interview → offer ladder, viewable as cards or a Kanban board and rolled up on a dashboard with calendar, tasks, and document storage alongside.\n\nThe AI layer is provider-agnostic by design. A model router sits behind OpenRouter, Anthropic, and OpenAI, so the app ships with a working free tier and any user can drop in their own key for unlimited usage — encrypted before storage — with model, temperature, and token budget exposed as first-class settings rather than buried constants. On top of that router: context-aware generation for cover letters, outreach emails, and replies drafted against the specific professor or role, plus a CV analyser that scores a CV against a pasted job description and reports the gap.\n\n**Result:** A shipped, publicly available product that collapses two tracking workflows and a pile of ad-hoc prompting into one system. The BYOK architecture means running cost scales to zero for the operator while power users are never rate-limited — and swapping in a new model provider is a config change, not a refactor.`,
+      category: ["software", "ml"],
+      technologies: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Vercel",
+        "OpenRouter",
+        "Anthropic Claude",
+        "OpenAI",
+        "BYOK",
+      ],
+      image: "/images/projects/trackapp/dashboard_track_your_applications.png",
+      gallery: [
+        {
+          src: "/images/projects/trackapp/dashboard_track_your_applications.png",
+          caption: "Unified pipeline dashboard",
+        },
+        {
+          src: "/images/projects/trackapp/professor_track_your_application.png",
+          caption: "Professor outreach CRM",
+        },
+        {
+          src: "/images/projects/trackapp/jobs_track_your_application.png",
+          caption: "Job application tracking",
+        },
+        {
+          src: "/images/projects/trackapp/kandban_track_your_applications.png",
+          caption: "Kanban status board",
+        },
+        {
+          src: "/images/projects/trackapp/ai_settings_track_your_application.png",
+          caption: "Multi-provider AI · BYOK",
+        },
+      ],
+      liveLink: "https://uni-track-full.vercel.app/login",
+    },
     {
       id: "ekyc-platform",
       title: "eKYC Biometric Onboarding Platform",
@@ -146,78 +191,79 @@ const Projects = () => {
                 transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
               >
                 <TiltCard>
-                <div
-                  className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30"
-                  onClick={() => setSelectedProject(project)}
-                >
-                  {/* Image */}
-                  <div className="relative h-56 -mx-6 -mt-6 mb-6 overflow-hidden bg-surface-light">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/project-placeholder.png";
-                      }}
-                    />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedProject(project);
+                  <div
+                    className="editorial-card group overflow-hidden h-full cursor-pointer hover:border-accent/30"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    {/* Image */}
+                    <div className="relative h-56 -mx-6 -mt-6 mb-6 overflow-hidden bg-surface-light">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "/images/project-placeholder.png";
                         }}
-                        className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
-                        aria-label="View project details"
-                      >
-                        <Eye size={20} />
-                      </button>
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
+                      />
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProject(project);
+                          }}
                           className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
-                          aria-label="View source code"
+                          aria-label="View project details"
                         >
-                          <Github size={20} />
-                        </a>
+                          <Eye size={20} />
+                        </button>
+                        {project.githubLink && (
+                          <a
+                            href={project.githubLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-3 rounded-full bg-cream/10 text-cream hover:bg-accent hover:text-white transition-all cursor-pointer"
+                            aria-label="View source code"
+                          >
+                            <Github size={20} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-xl font-heading font-bold text-cream group-hover:text-accent transition-colors">
+                        {project.title}
+                      </h3>
+                      <span className="text-xs font-mono text-accent uppercase tracking-wider ml-3 flex-shrink-0">
+                        {project.category[0]}
+                      </span>
+                    </div>
+
+                    <p className="text-cream-dark text-sm font-body leading-relaxed mb-6">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-light">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 4 && (
+                        <span className="text-xs text-muted/50">
+                          +{project.technologies.length - 4}
+                        </span>
                       )}
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-heading font-bold text-cream group-hover:text-accent transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs font-mono text-accent uppercase tracking-wider ml-3 flex-shrink-0">
-                      {project.category[0]}
-                    </span>
-                  </div>
-
-                  <p className="text-cream-dark text-sm font-body leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-light">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 text-xs font-mono text-muted border border-surface-light rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <span className="text-xs text-muted/50">
-                        +{project.technologies.length - 4}
-                      </span>
-                    )}
-                  </div>
-                </div>
                 </TiltCard>
               </motion.div>
             ))}
@@ -244,22 +290,59 @@ const Projects = () => {
                 onClick={(e) => e.stopPropagation()}
                 className="relative w-full max-w-3xl bg-surface border border-surface-light rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
               >
-                {/* Modal Image */}
-                <div className="relative h-64 sm:h-72 w-full shrink-0 bg-surface-light">
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-primary/60 text-cream hover:bg-primary transition-colors cursor-pointer"
-                    onClick={() => setSelectedProject(null)}
-                    aria-label="Close"
-                  >
-                    <X size={18} />
-                  </button>
-                  <div className="absolute bottom-6 left-6 z-20">
+                {/* Modal Image — carousel when the project ships extra shots,
+                    otherwise the single hero image with an overlaid title. */}
+                {selectedProject.gallery ? (
+                  <div className="relative w-full shrink-0">
+                    <ProjectCarousel
+                      slides={selectedProject.gallery}
+                      alt={selectedProject.title}
+                    />
+                    <button
+                      className="absolute top-4 right-4 z-20 p-2 rounded-full bg-primary/60 text-cream hover:bg-primary transition-colors cursor-pointer"
+                      onClick={() => setSelectedProject(null)}
+                      aria-label="Close"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative h-64 sm:h-72 w-full shrink-0 bg-surface-light">
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
+                    <img
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      className="absolute top-4 right-4 z-20 p-2 rounded-full bg-primary/60 text-cream hover:bg-primary transition-colors cursor-pointer"
+                      onClick={() => setSelectedProject(null)}
+                      aria-label="Close"
+                    >
+                      <X size={18} />
+                    </button>
+                    <div className="absolute bottom-6 left-6 z-20">
+                      <h3 className="text-3xl font-heading font-bold text-cream mb-2">
+                        {selectedProject.title}
+                      </h3>
+                      <div className="flex gap-2">
+                        {selectedProject.category.map((c) => (
+                          <span
+                            key={c}
+                            className="px-3 py-1 text-xs font-mono bg-accent text-white rounded-full uppercase"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Carousel layout puts the title below the frame so the
+                    screenshots are never covered by the overlay. */}
+                {selectedProject.gallery && (
+                  <div className="px-8 pt-6 shrink-0">
                     <h3 className="text-3xl font-heading font-bold text-cream mb-2">
                       {selectedProject.title}
                     </h3>
@@ -274,7 +357,7 @@ const Projects = () => {
                       ))}
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Modal Content */}
                 <div className="p-8 overflow-y-auto">
