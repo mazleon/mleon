@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Webfonts are linked from index.html, not @import-ed here: an @import inside
+   the bundled stylesheet cannot start until that bundle has downloaded and
+   parsed, which delays the fonts past the hero's entrance animation. */
 
 @tailwind base;
 @tailwind components;

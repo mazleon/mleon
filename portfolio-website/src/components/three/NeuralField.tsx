@@ -102,14 +102,17 @@ function makeGlowSprite(): THREE.Texture {
 
 function Pulses({ network, sprite }: { network: Network; sprite: THREE.Texture }) {
   const ref = useRef<THREE.Points>(null);
-  const pulses = useMemo(() => {
-    const rng = mulberry32(7);
-    return Array.from({ length: PULSE_COUNT }, () => ({
-      edge: Math.floor(rng() * network.edges.length),
-      t: rng(),
-      speed: 0.25 + rng() * 0.5,
-    }));
-  }, [network]);
+  // Seeded here rather than per-memo so respawns stay deterministic too.
+  const rng = useMemo(() => mulberry32(7), []);
+  const pulses = useMemo(
+    () =>
+      Array.from({ length: PULSE_COUNT }, () => ({
+        edge: Math.floor(rng() * network.edges.length),
+        t: rng(),
+        speed: 0.25 + rng() * 0.5,
+      })),
+    [network, rng]
+  );
   const buffer = useMemo(() => new Float32Array(PULSE_COUNT * 3), []);
 
   useFrame((_, delta) => {
@@ -119,7 +122,7 @@ function Pulses({ network, sprite }: { network: Network; sprite: THREE.Texture }
       pulse.t += delta * pulse.speed;
       if (pulse.t > 1) {
         pulse.t = 0;
-        pulse.edge = Math.floor(Math.random() * network.edges.length);
+        pulse.edge = Math.floor(rng() * network.edges.length);
       }
       const [a, b] = network.edges[pulse.edge];
       // Ease the travel so pulses accelerate out of a node and settle into the next
@@ -174,10 +177,15 @@ function Scene({ animate }: { animate: boolean }) {
     const g = group.current;
     if (!g) return;
     g.rotation.y += delta * 0.04;
+    // Frame-rate-independent damping. A fixed per-frame lerp settles twice as
+    // fast at 120Hz as at 60Hz and lurches whenever a frame is dropped; this
+    // decays by the same proportion per *second* regardless of frame rate.
+    // 0.08 is tuned to match the old 0.04 constant at 60fps.
+    const k = 1 - Math.pow(0.08, delta);
     const targetX = pointer.current.y * 0.12;
     const targetZ = pointer.current.x * 0.06;
-    g.rotation.x += (targetX - g.rotation.x) * 0.04;
-    g.rotation.z += (targetZ - g.rotation.z) * 0.04;
+    g.rotation.x += (targetX - g.rotation.x) * k;
+    g.rotation.z += (targetZ - g.rotation.z) * k;
     g.position.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.25;
   });
 
@@ -224,15 +232,19 @@ function Scene({ animate }: { animate: boolean }) {
 
 interface NeuralFieldProps {
   animate?: boolean;
+  /** False parks the render loop — see HeroCanvas for when that happens. */
+  running?: boolean;
 }
 
-const NeuralField = ({ animate = true }: NeuralFieldProps) => {
+const NeuralField = ({ animate = true, running = true }: NeuralFieldProps) => {
   return (
     <Canvas
       camera={{ position: [0, 0, 12], fov: 50 }}
-      dpr={[1, 2]}
-      frameloop={animate ? "always" : "demand"}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      // MSAA buys nothing for sprite-mapped points and additively blended
+      // lines, and full-viewport 2x DPR is where the fill rate goes.
+      dpr={[1, 1.5]}
+      frameloop={animate && running ? "always" : "demand"}
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
       <Scene animate={animate} />

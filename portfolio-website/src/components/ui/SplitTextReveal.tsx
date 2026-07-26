@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { EASE_OUT_EXPO } from "../../lib/motion";
 
 interface SplitTextRevealProps {
   text: string;
@@ -9,6 +10,11 @@ interface SplitTextRevealProps {
   delay?: number;
   stagger?: number;
   once?: boolean;
+  /**
+   * Extra gate on top of visibility. The hero holds this false until webfonts
+   * have loaded, so words don't reflow to new metrics mid-transform.
+   */
+  start?: boolean;
 }
 
 /**
@@ -26,10 +32,18 @@ const SplitTextReveal = ({
   delay = 0,
   stagger = 0.08,
   once = true,
+  start = true,
 }: SplitTextRevealProps) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once, amount: 0.5 });
+  // 0.2, not 0.5: `once` latches on the first *true*, so a heading that is
+  // restored at a scroll offset leaving it under half-visible — a plain
+  // refresh partway down the page does this — would stay masked until the
+  // visitor happened to scroll it further in. A low threshold can't strand it.
+  const inView = useInView(ref, { once, amount: 0.2 });
+  // Compositor layers are only worth holding while the words are moving.
+  const [settled, setSettled] = useState(false);
   const words = text.split(" ");
+  const show = inView && start;
 
   return (
     <span ref={ref} className={className}>
@@ -41,16 +55,23 @@ const SplitTextReveal = ({
           aria-hidden="true"
         >
           <motion.span
-            className={`inline-block will-change-transform ${
+            className={`inline-block ${settled ? "" : "will-change-transform"} ${
               accentWords.includes(word) ? "text-accent" : ""
             }`}
             initial={{ y: "115%" }}
-            animate={inView ? { y: 0 } : { y: "115%" }}
+            animate={show ? { y: 0 } : { y: "115%" }}
             transition={{
               duration: 0.85,
               delay: delay + i * stagger,
-              ease: [0.16, 1, 0.3, 1],
+              ease: EASE_OUT_EXPO,
             }}
+            onAnimationComplete={
+              // Guarded on `show` — the idle state animates to its own initial
+              // value, which would otherwise report complete straight away.
+              i === words.length - 1 && show
+                ? () => setSettled(true)
+                : undefined
+            }
           >
             {word}
           </motion.span>
